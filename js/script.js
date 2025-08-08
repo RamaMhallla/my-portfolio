@@ -98,3 +98,42 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", checkScroll);
   checkScroll(); // Check on load
 });
+
+function scrollCertifications(direction) {
+  const container = document.querySelector(".certifications-container");
+  const scrollAmount = 320; // Adjust this value based on card width + gap
+  container.scrollBy({
+    left: direction * scrollAmount,
+    behavior: "smooth",
+  });
+}
+
+// Optional: Auto-scroll for touch devices
+let isDown = false;
+let startX;
+let scrollLeft;
+const certificationsContainer = document.querySelector(
+  ".certifications-container"
+);
+
+certificationsContainer.addEventListener("mousedown", (e) => {
+  isDown = true;
+  startX = e.pageX - certificationsContainer.offsetLeft;
+  scrollLeft = certificationsContainer.scrollLeft;
+});
+
+certificationsContainer.addEventListener("mouseleave", () => {
+  isDown = false;
+});
+
+certificationsContainer.addEventListener("mouseup", () => {
+  isDown = false;
+});
+
+certificationsContainer.addEventListener("mousemove", (e) => {
+  if (!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - certificationsContainer.offsetLeft;
+  const walk = (x - startX) * 2;
+  certificationsContainer.scrollLeft = scrollLeft - walk;
+});
