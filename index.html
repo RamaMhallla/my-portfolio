@@ -386,7 +386,8 @@
         <div class="project-content">
           <div class="project-image">
             <img
-              src="img/smart_mesum.jpg"
+              src="img/M1_1536x1024_q82.jpg"
+              style="object-fit: cover"
               alt="Smart Museum Emotion Recognition"
             />
           </div>
@@ -407,6 +408,54 @@
               <li>Flutter</li>
               <li>Node-RED</li>
               <li>Laravel</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="project">
+        <div class="project-header">
+          <h3>WSN: XBee 802.15.4 + BME (Waspmote)</h3>
+          <div class="project-links">
+            <a
+              href="https://github.com/RamaMhallla/waspmote-xbee-bme-demo"
+              class="code-link"
+              target="_blank"
+            >
+              <i class="fab fa-github"></i> View Code
+            </a>
+            <!-- اختياري: ارفعي تقرير/صور وحطي رابطها -->
+            <!-- <a href="docs/wsn-demo.pdf" class="demo-link" target="_blank"><i class="fas fa-file-alt"></i> Report</a> -->
+          </div>
+        </div>
+
+        <p>
+          Mini wireless sensing project using Libelium/Waspmote + XBee 802.15.4
+          and Cities PRO (BME/BME280). Sender/Receiver exchange ASCII payloads
+          (TEMP/HUM/PRES), and the receiver computes medians/averages over
+          batches of 10 packets.
+        </p>
+
+        <div class="project-content">
+          <div class="project-image">
+            <!-- بدّلي الصورة إذا عندك صورة محلية -->
+            <img
+              src="img/XBee 802.15.4.png"
+              alt="XBee 802.15.4 + BME WSN demo"
+            />
+          </div>
+          <div class="project-details">
+            <ul class="features-list">
+              <li>IEEE 802.15.4 link (PAN 0x1234, CH 0x0F), optional AES</li>
+              <li>ASCII payload with tags: <code>TEMP/HUM/PRES</code></li>
+              <li>Medians & averages computed per 10 received frames</li>
+              <li>Waspmote + Cities PRO (BME/BME280) on socket A</li>
+            </ul>
+            <ul class="tech-tags">
+              <li>IEEE 802.15.4</li>
+              <li>XBee</li>
+              <li>Waspmote</li>
+              <li>BME280</li>
+              <li>C/C++</li>
             </ul>
           </div>
         </div>
