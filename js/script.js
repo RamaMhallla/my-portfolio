@@ -1,31 +1,33 @@
-'use strict';
+"use strict";
 
 // Expose scrollToContent globally for the inline onclick handler
 window.scrollToContent = function () {
-  const firstSection = document.querySelector('section');
+  const firstSection = document.querySelector("section");
   if (firstSection) {
-    firstSection.scrollIntoView({ behavior: 'smooth' });
+    firstSection.scrollIntoView({ behavior: "smooth" });
   }
 };
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   // Moving tech icons
-  const movingIcons = document.getElementById('movingIcons');
+  const movingIcons = document.getElementById("movingIcons");
   const icons = [
-    'fa-microchip',
-    'fa-wifi',
-    'fa-robot',
-    'fa-server',
-    'fa-cloud',
-    'fa-satellite',
-    'fa-mobile-alt',
-    'fa-code',
+    "fa-microchip",
+    "fa-wifi",
+    "fa-robot",
+    "fa-server",
+    "fa-cloud",
+    "fa-satellite",
+    "fa-mobile-alt",
+    "fa-code",
   ];
 
   if (movingIcons) {
     for (let i = 0; i < 20; i++) {
-      const icon = document.createElement('i');
-      icon.className = `tech-icon fas ${icons[Math.floor(Math.random() * icons.length)]}`;
+      const icon = document.createElement("i");
+      icon.className = `tech-icon fas ${
+        icons[Math.floor(Math.random() * icons.length)]
+      }`;
       icon.style.left = `${Math.random() * 100}%`;
       icon.style.top = `${Math.random() * 100}%`;
       icon.style.animationDuration = `${10 + Math.random() * 20}s`;
@@ -35,12 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Typing effect
-  const typingText = document.querySelector('.typing-text');
+  const typingText = document.querySelector(".typing-text");
   const phrases = [
-    'MSc Student in Telecommunication Engineering',
-    'AI & IoT Specialist',
-    'Cloud & Edge Computing',
-    'Back-end Web Developer',
+    "MSc Student in Telecommunication Engineering",
+    "AI & IoT Specialist",
+    "Cloud & Edge Computing",
+    "Back-end Web Developer",
   ];
   let phraseIndex = 0;
   let charIndex = 0;
@@ -80,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Scroll animation for sections
-  const sections = document.querySelectorAll('section');
+  const sections = document.querySelectorAll("section");
 
   function checkScroll() {
     sections.forEach((section) => {
@@ -88,11 +90,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const windowHeight = window.innerHeight;
 
       if (sectionTop < windowHeight * 0.75) {
-        section.classList.add('visible');
+        section.classList.add("visible");
       }
     });
   }
 
-  window.addEventListener('scroll', checkScroll);
+  window.addEventListener("scroll", checkScroll);
   checkScroll(); // Check on load
 });
