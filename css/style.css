@@ -1019,3 +1019,70 @@ footer {
     margin-bottom: 0.8rem;
   }
 }
+/* Fix project image white space */
+.project-content {
+  align-items: flex-start; /* ما تمدّد كل العناصر */
+}
+
+.project-image {
+  align-self: flex-start; /* تأكيد عدم التمدّد للصورة */
+}
+
+.project-image img {
+  display: block;
+  width: 100%;
+  height: auto; /* object-fit بدون height ما له تأثير */
+}
+/* improvemets*/
+/* اقتراح إضافات لملف CSS */
+
+/* نظام ألوان متدرج حديث */
+:root {
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-accent: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+}
+
+/* تأثيرات حركية أكثر تطوراً */
+@keyframes float-up {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.section-animate {
+  animation: float-up 0.8s ease-out forwards;
+}
+
+/* تحسينات للشريط المتحرك للشهادات */
+.certifications-container {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* تأثيرات hover أكثر تفاعلية */
+.project-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+@media (max-width: 576px) {
+  /* تحسينات للهواتف الصغيرة */
+  .header-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .project-links {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .demo-link,
+  .code-link {
+    width: 100%;
+    text-align: center;
+  }
+}
