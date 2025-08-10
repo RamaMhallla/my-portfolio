@@ -312,7 +312,7 @@
       </div>
     </section>
 
-    <section id="projects">
+    <section id="projects" class="projects">
       <h2>Featured Projects</h2>
       <div class="project">
         <div class="project-header">
@@ -323,7 +323,10 @@
               class="demo-link"
               ><i class="fas fa-external-link-alt"></i> Live Demo</a
             >
-            <a href="#" class="code-link"
+            <a
+              href="https://github.com/RamaMhallla/flutter_health_app_new"
+              class="code-link"
+              target="_blank"
               ><i class="fab fa-github"></i> View Code</a
             >
           </div>
@@ -373,7 +376,7 @@
             <a href="#" class="demo-link"
               ><i class="fas fa-external-link-alt"></i> Live Demo</a
             >
-            <a href="#" class="code-link"
+            <a href="#" class="code-link" target="_blank"
               ><i class="fab fa-github"></i> View Code</a
             >
           </div>
@@ -410,32 +413,53 @@
 
       <div class="project">
         <div class="project-header">
-          <h3>Air Canvas Drawing App</h3>
+          <h3>Air Drawing Canvas</h3>
           <div class="project-links">
             <a href="#" class="demo-link"
               ><i class="fas fa-external-link-alt"></i> Live Demo</a
             >
-            <a href="#" class="code-link"
+            <a
+              href="https://github.com/RamaMhallla/air-drawing-canvas"
+              class="code-link"
+              target="_blank"
               ><i class="fab fa-github"></i> View Code</a
             >
           </div>
         </div>
+
         <p>
-          A virtual canvas that lets users draw in the air using finger
-          movements, captured through computer vision techniques.
+          Draw in the air with your <strong>index finger</strong> using a
+          standard webcam. The app includes a left-side thickness slider, RGB
+          color buttons, an eraser, a background toggle (black/white), a
+          configurable grid, and one-key saving.
         </p>
+
         <div class="project-content">
           <div class="project-image">
-            <img src="img/drawing1.png" alt="Air Canvas Drawing App" />
+            <img
+              src="img/drawing2.png"
+              alt="Air Drawing Canvas — index-finger drawing with left thickness slider and grid overlay"
+            />
           </div>
+
           <div class="project-details">
             <ul class="features-list">
-              <li>Real-time finger tracking using OpenCV</li>
-              <li>Color selection and brush size adjustment</li>
-              <li>Save and export drawings functionality</li>
-              <li>Background subtraction for robust performance</li>
-              <li>Minimal hardware requirements</li>
+              <li>Real-time index-finger tracking (MediaPipe Hands)</li>
+              <li>Left-side thickness slider (hover with index to adjust)</li>
+              <li>RGB color buttons (Red / Green / Blue) + Eraser mode</li>
+              <li>
+                Background toggle (black/white) without destroying strokes
+              </li>
+              <li>Grid overlay with adjustable spacing (G- / G+)</li>
+              <li>Open-palm clear gesture + “Clear All” button</li>
+              <li>Motion-based drawing guard (background subtraction)</li>
+              <li>On-screen color indicator with current HEX</li>
+              <li>
+                Quick save with <code>s</code> (drawing + preview) and quit with
+                <code>q</code>
+              </li>
             </ul>
+
             <ul class="tech-tags">
               <li>Python</li>
               <li>OpenCV</li>
@@ -453,7 +477,10 @@
             <a href="#" class="demo-link"
               ><i class="fas fa-external-link-alt"></i> Live Demo</a
             >
-            <a href="#" class="code-link"
+            <a
+              href="https://github.com/RamaMhallla/museum-emotion-ai-platform"
+              class="code-link"
+              target="_blank"
               ><i class="fab fa-github"></i> View Code</a
             >
           </div>
@@ -567,19 +594,25 @@
         <p>
           <i class="fas fa-envelope"></i>
           Email:
-          <a href="mailto:rama.mhalla@example.com">ramamhalla24@gmail.com</a>
+          <a href="mailto:ramamhalla24@gmail.com">ramamhalla24@gmail.com</a>
         </p>
         <p>
           <i class="fab fa-linkedin"></i>
           LinkedIn:
-          <a href="https://linkedin.com/in/rama-mhalla"
+          <a
+            href="https://www.linkedin.com/in/rama-mhalla-5b20081a7/"
+            target="_blank"
+            rel="noopener noreferrer"
             >https://www.linkedin.com/in/rama-mhalla-5b20081a7/</a
           >
         </p>
         <p>
           <i class="fab fa-github"></i>
           GitHub:
-          <a href="https://github.com/ramamhalla"
+          <a
+            href="https://github.com/RamaMhallla"
+            target="_blank"
+            rel="noopener noreferrer"
             >https://github.com/RamaMhallla</a
           >
         </p>
@@ -592,12 +625,6 @@
 
     <footer>
       <p>&copy; 2025 Rama Mhalla | Telecom Engineer & AI Enthusiast</p>
-      <div class="social-links">
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-medium"></i></a>
-        <a href="#"><i class="fab fa-researchgate"></i></a>
-      </div>
     </footer>
 
     <script src="./js/script.js" defer></script>

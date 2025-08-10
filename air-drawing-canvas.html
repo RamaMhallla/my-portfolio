@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rama Mhalla | Air Drawing Canvas</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2b3d5b;
+        --secondary-color: #3a5a7a;
+        --accent-color: #4fc3f7;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --text-color: #495057;
+        --card-border: #e6e8ee;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--text-color);
+        background: var(--light-color);
+        line-height: 1.8;
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: #fff;
+        text-align: center;
+        padding: 5rem 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 2.8rem;
+        font-weight: 700;
+      }
+      header p {
+        margin: 1rem auto 0;
+        max-width: 820px;
+        font-size: 1.2rem;
+        opacity: 0.95;
+      }
+
+      section {
+        padding: 3rem 2rem;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      h2 {
+        color: var(--primary-color);
+        font-size: 2.2rem;
+        margin: 0 0 1.5rem;
+        position: relative;
+        padding-bottom: 0.8rem;
+        font-weight: 700;
+      }
+      h2::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 80px;
+        height: 4px;
+        background: var(--accent-color);
+        border-radius: 2px;
+      }
+
+      h3 {
+        color: var(--secondary-color);
+        font-size: 1.6rem;
+        margin: 2rem 0 1rem;
+        font-weight: 600;
+      }
+
+      .project-intro {
+        background: rgba(79, 195, 247, 0.1);
+        border-left: 4px solid var(--accent-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+
+      article {
+        margin-bottom: 2.5rem;
+      }
+
+      ul,
+      ol {
+        padding-left: 1.5rem;
+        margin: 1rem 0;
+      }
+      li {
+        margin-bottom: 0.8rem;
+        position: relative;
+      }
+
+      .features-list li::before {
+        content: "•";
+        color: var(--accent-color);
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        padding: 0.8rem;
+        text-align: left;
+        border-bottom: 1px solid #e6e8ee;
+      }
+      th {
+        background: #f7f9fc;
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+      tr:hover {
+        background: #f7f9fc;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        background: #f7f9fc;
+        padding: 1.2rem;
+        border-radius: 8px;
+        border: 1px solid #e6e8ee;
+        font-family: "Courier New", Courier, monospace;
+        direction: ltr;
+        margin: 1.5rem 0;
+        overflow-x: auto;
+      }
+
+      code {
+        background: #e3f2fd;
+        color: var(--secondary-color);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.9em;
+      }
+
+      kbd {
+        background: #e9ecef;
+        color: var(--dark-color);
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: inherit;
+        font-size: 0.9em;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.7rem 1.2rem;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        border: 1px solid transparent;
+      }
+      .btn-demo {
+        background: var(--accent-color);
+        color: #fff;
+      }
+      .btn-demo:hover {
+        background: #3ab7e5;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(79, 195, 247, 0.3);
+      }
+      .btn-code {
+        background: #fff;
+        color: var(--accent-color);
+        border-color: var(--accent-color);
+      }
+      .btn-code:hover {
+        background: #eaf8ff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(79, 195, 247, 0.2);
+      }
+
+      .project-gallery {
+        margin: 2.5rem 0;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+      .gallery-item {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .gallery-item:hover {
+        transform: translateY(-5px);
+      }
+      .gallery-item img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .gallery-caption {
+        padding: 0.8rem;
+        background: #fff;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      .source-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        margin-top: 1rem;
+        transition: color 0.2s;
+      }
+      .source-link:hover {
+        color: var(--primary-color);
+        text-decoration: underline;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2.5rem;
+        margin-top: 3rem;
+        color: #fff;
+        background: var(--primary-color);
+      }
+
+      @media (max-width: 768px) {
+        header {
+          padding: 3rem 1.5rem;
+        }
+        header h1 {
+          font-size: 2.2rem;
+        }
+        section {
+          padding: 2rem 1.5rem;
+        }
+        h2 {
+          font-size: 1.8rem;
+        }
+        h3 {
+          font-size: 1.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Rama Mhalla</h1>
+      <p>
+        MSc student in Telecommunication Engineering • AI, IoT, 5G, Cloud & Edge
+        Computing
+      </p>
+    </header>
+
+    <section id="air-drawing-canvas" aria-labelledby="adc-title">
+      <div class="project-intro">
+        <h2 id="adc-title">Air Drawing Canvas</h2>
+        <p>
+          Draw in the air with your <strong>index finger</strong> using a
+          standard webcam. The app uses <strong>OpenCV</strong> for image
+          processing and <strong>MediaPipe Hands</strong> for real-time hand
+          tracking, then renders smooth strokes on a virtual canvas with a clean
+          UI.
+        </p>
+      </div>
+
+      <article aria-labelledby="adc-overview">
+        <h3 id="adc-overview">Overview</h3>
+        <p>
+          This app turns simple finger gestures into digital ink. It includes:
+        </p>
+        <ul class="features-list">
+          <li>Side control to adjust brush thickness</li>
+          <li>Primary color buttons (Red, Green, Blue)</li>
+          <li>Eraser mode</li>
+          <li>Background toggle (white/black)</li>
+          <li>Grid overlay with adjustable spacing</li>
+          <li>One-key saving (canvas + preview)</li>
+          <li>Motion filtering to reduce accidental strokes</li>
+        </ul>
+      </article>
+
+      <article aria-labelledby="adc-features">
+        <h3 id="adc-features">Key Features</h3>
+        <ul class="features-list">
+          <li>Real-time index-finger tracking with smooth drawing</li>
+          <li>
+            Left-side <em>thickness slider</em> (hover the index finger to
+            adjust)
+          </li>
+          <li>RGB color buttons and <em>Eraser</em> mode</li>
+          <li>Toggle background without affecting existing strokes</li>
+          <li>Grid overlay with G− / G+ spacing controls</li>
+          <li>Open-palm clear gesture + “Clear All” button</li>
+          <li>Background-subtraction guard to prevent unintended lines</li>
+          <li>On-screen color indicator showing current HEX</li>
+          <li>
+            Quick save with <kbd>s</kbd> (<code>drawing_*.png</code> &
+            <code>preview_*.png</code>)
+          </li>
+        </ul>
+      </article>
+
+      <div class="project-gallery">
+        <h3>Gallery</h3>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/600x400/2b3d5b/ffffff?text=App+UI"
+              alt="Main app UI"
+            />
+            <div class="gallery-caption">Main application interface</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/600x400/3a5a7a/ffffff?text=Index+Finger+Drawing"
+              alt="Index finger drawing"
+            />
+            <div class="gallery-caption">Drawing with the index finger</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/600x400/4fc3f7/ffffff?text=Thickness+Slider"
+              alt="Thickness slider"
+            />
+            <div class="gallery-caption">Adjusting brush thickness</div>
+          </div>
+        </div>
+      </div>
+
+      <article aria-labelledby="adc-how">
+        <h3 id="adc-how">How It Works</h3>
+        <ol>
+          <li><strong>Camera input:</strong> capture frames from the webcam</li>
+          <li>
+            <strong>Hand tracking:</strong> MediaPipe detects hand landmarks;
+            index fingertip (ID 8) is tracked
+          </li>
+          <li>
+            <strong>Gesture logic:</strong> “Index only up” → draw/erase; “Open
+            palm” → clear
+          </li>
+          <li>
+            <strong>Drawing engine:</strong> anti-aliased strokes on a separate
+            canvas
+          </li>
+          <li>
+            <strong>Controls:</strong> bottom toolbar (colors, eraser, grid,
+            background, clear) + side thickness slider
+          </li>
+        </ol>
+      </article>
+
+      <article aria-labelledby="adc-controls">
+        <h3 id="adc-controls">Controls</h3>
+        <table role="table" aria-label="Controls and shortcuts">
+          <thead>
+            <tr>
+              <th>Action</th>
+              <th>How</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Draw</td>
+              <td>
+                Raise <strong>index finger only</strong> and move within the
+                drawing area
+              </td>
+            </tr>
+            <tr>
+              <td>Eraser</td>
+              <td>
+                Tap <em>Eraser</em> then draw (uses background color with larger
+                width)
+              </td>
+            </tr>
+            <tr>
+              <td>Thickness</td>
+              <td>
+                Hover the <strong>side slider</strong> to adjust stroke width
+              </td>
+            </tr>
+            <tr>
+              <td>Color</td>
+              <td>Use color buttons (Red / Green / Blue)</td>
+            </tr>
+            <tr>
+              <td>Background</td>
+              <td>Tap <strong>BG</strong> to toggle between white/black</td>
+            </tr>
+            <tr>
+              <td>Grid</td>
+              <td>
+                Tap <strong>G−</strong> / <strong>G+</strong> to change spacing
+              </td>
+            </tr>
+            <tr>
+              <td>Clear</td>
+              <td>Open palm for a moment, or press <em>Clear All</em></td>
+            </tr>
+            <tr>
+              <td>Save / Quit</td>
+              <td>
+                <kbd>s</kbd> to save (canvas + preview), <kbd>q</kbd> to quit
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article aria-labelledby="adc-req">
+        <h3 id="adc-req">Requirements</h3>
+        <ul class="features-list">
+          <li>Python 3.10+ and a webcam (Windows/macOS/Linux)</li>
+          <li>
+            Packages: <code>opencv-python</code>, <code>mediapipe</code>,
+            <code>numpy</code>
+          </li>
+        </ul>
+      </article>
+
+      <article aria-labelledby="adc-install">
+        <h3 id="adc-install">Install & Run</h3>
+        <pre>
+pip install -r requirements.txt
+python air_drawing_canvas.py</pre
+        >
+      </article>
+
+      <a
+        href="https://github.com/RamaMhallla/air-drawing-canvas"
+        target="_blank"
+        rel="noopener"
+        class="source-link"
+      >
+        <i class="fab fa-github"></i> View source on GitHub
+      </a>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Rama Mhalla • All rights reserved</p>
+    </footer>
+  </body>
+</html>

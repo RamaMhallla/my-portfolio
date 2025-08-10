@@ -1086,3 +1086,20 @@ footer {
     text-align: center;
   }
 }
+/* تلوين الرابط الفعّال */
+.nav-links a.active {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* لو الناف ثابتة أعلى الصفحة */
+.navbar {
+  position: sticky; /* أو position: fixed; top:0; لو حابّة */
+  top: 0;
+  z-index: 1000;
+}
+
+/* خلي الأقسام تاخد هامش سكرول مريح لو الناف ثابتة */
+section {
+  scroll-margin-top: 80px; /* عدّلي 80px حسب ارتفاع الناف عندك */
+}

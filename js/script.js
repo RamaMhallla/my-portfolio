@@ -137,3 +137,139 @@ certificationsContainer.addEventListener("mousemove", (e) => {
   const walk = (x - startX) * 2;
   certificationsContainer.scrollLeft = scrollLeft - walk;
 });
+// active navbar
+// js/script.js
+document.addEventListener("DOMContentLoaded", () => {
+  const nav = document.querySelector(".navbar");
+  const navLinksContainer = document.getElementById("navLinks");
+  const hamburger = document.getElementById("hamburger");
+
+  // كل روابط الناف اللي بتشير لأقسام الصفحة
+  const navLinks = Array.from(
+    navLinksContainer.querySelectorAll('a[href^="#"]')
+  );
+
+  // الأقسام الموجودة فعلياً في الصفحة (بالترتيب العمودي)
+  let sections = navLinks
+    .map((a) => {
+      const sel = a.getAttribute("href");
+      if (!sel || !sel.startsWith("#")) return null;
+      return document.querySelector(sel);
+    })
+    .filter(Boolean);
+
+  // فتح/إغلاق قائمة الموبايل
+  if (hamburger) {
+    hamburger.addEventListener("click", () => {
+      navLinksContainer.classList.toggle("open");
+      hamburger.classList.toggle("open");
+    });
+    navLinks.forEach((a) =>
+      a.addEventListener("click", () => {
+        navLinksContainer.classList.remove("open");
+        hamburger.classList.remove("open");
+      })
+    );
+  }
+
+  const getNavHeight = () => (nav ? nav.offsetHeight : 0);
+
+  // سكرول سلس عند الضغط على الروابط
+  navLinks.forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const hash = a.getAttribute("href");
+      if (!hash || !hash.startsWith("#")) return;
+      const target = document.querySelector(hash);
+      if (!target) return;
+
+      e.preventDefault();
+      const top =
+        target.getBoundingClientRect().top +
+        window.scrollY -
+        getNavHeight() -
+        8;
+      window.scrollTo({ top, behavior: "smooth" });
+
+      // حدّث الـactive مباشرة
+      setActive(hash.slice(1));
+      history.replaceState(null, "", hash);
+    });
+  });
+
+  // تفعيل رابط معيّن
+  const setActive = (id) => {
+    navLinks.forEach((link) => {
+      const match = link.getAttribute("href") === `#${id}`;
+      link.classList.toggle("active", match);
+      if (match) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+  };
+
+  // حساب القسم الحالي بناءً على موضع السّكرول
+  let ticking = false;
+  const updateActiveByScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      // نقطة مرجعية: أعلى الناف + هامش صغير
+      const probe = window.scrollY + getNavHeight() + 80;
+
+      // أحياناً ارتفاعات الأقسام تتغير بعد تحميل صور -> أعيدي فرزهم حسب الموضع
+      sections = sections
+        .filter((s) => document.body.contains(s))
+        .sort((a, b) => a.offsetTop - b.offsetTop);
+
+      // اختاري "آخر" قسم بدايته <= نقطة probe
+      let current = sections[0];
+      for (const sec of sections) {
+        if (sec.offsetTop <= probe) current = sec;
+        else break;
+      }
+
+      // لو قربنا من آخر الصفحة، فعّلي آخر قسم (يتفادى مشكلة الأقسام الطويلة مثل projects)
+      const nearBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+      if (nearBottom) current = sections[sections.length - 1];
+
+      if (current && current.id) setActive(current.id);
+      ticking = false;
+    });
+  };
+
+  // استماع لأحداث السّكرول/الريسايز/بعد تحميل الصور
+  window.addEventListener("scroll", updateActiveByScroll, { passive: true });
+  window.addEventListener("resize", updateActiveByScroll);
+  window.addEventListener("load", updateActiveByScroll);
+
+  // ملاحظة: صور كبيرة تغيّر الارتفاعات بعد التحميل
+  const imgs = Array.from(document.images || []);
+  let pending = imgs.length;
+  if (pending) {
+    imgs.forEach((img) => {
+      if (img.complete) {
+        if (--pending === 0) updateActiveByScroll();
+      } else {
+        img.addEventListener("load", () => {
+          if (--pending === 0) updateActiveByScroll();
+        });
+        img.addEventListener("error", () => {
+          if (--pending === 0) updateActiveByScroll();
+        });
+      }
+    });
+  } else {
+    updateActiveByScroll();
+  }
+
+  // زر السهم بالهيدر
+  window.scrollToContent = () => {
+    const first = document.querySelector("#about");
+    if (first) {
+      const top =
+        first.getBoundingClientRect().top + window.scrollY - getNavHeight() - 8;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  };
+});
