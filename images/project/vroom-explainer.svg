@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style><![CDATA[
+      :root { color-scheme: light dark; }
+      .bg { fill: #f6f8fb; }
+      .card { fill: #ffffff; stroke: rgba(58,90,122,0.18); stroke-width: 1; filter: url(#shadow); }
+      .title { font: 600 36px 'Poppins', Arial, sans-serif; fill: #2b3d5b; }
+      .subtitle { font: 600 22px 'Poppins', Arial, sans-serif; fill: #2b3d5b; }
+      .label { font: 600 18px 'Poppins', Arial, sans-serif; fill: #3a5a7a; }
+      .text { font: 400 16px 'Poppins', Arial, sans-serif; fill: #495057; }
+      .chip { fill: #e3f2fd; }
+      .chipText { font: 600 14px 'Poppins', Arial, sans-serif; fill: #3a5a7a; }
+      .accent { fill: #4fc3f7; }
+      .accentStroke { stroke: #4fc3f7; }
+      .arrow { stroke: #4fc3f7; stroke-width: 2.5; marker-end: url(#arrowHead); fill: none; }
+    ]]></style>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="rgba(19,31,53,0.18)"/>
+    </filter>
+
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2b3d5b"/>
+      <stop offset="100%" stop-color="#3a5a7a"/>
+    </linearGradient>
+
+    <marker id="arrowHead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0,0 10,4 0,8" fill="#4fc3f7"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" x="0" y="0" width="1600" height="900" rx="0"/>
+
+  <!-- Header strip -->
+  <rect x="40" y="40" width="1520" height="90" rx="14" fill="url(#grad)" filter="url(#shadow)"/>
+  <text x="60" y="100" class="title" fill="#ffffff">VROOM — Backend Dashboard &amp; APIs (Laravel)</text>
+  <text x="1170" y="100" class="label" fill="#d9f3ff">Enterprise Logistics Platform</text>
+
+  <!-- Purpose / Objectives (Left) -->
+  <g transform="translate(40,160)">
+    <rect class="card" x="0" y="0" width="470" height="290" rx="14"/>
+    <text x="22" y="40" class="subtitle">Purpose &amp; Objectives</text>
+    <circle cx="30" cy="78" r="5" class="accent"/>
+    <text x="45" y="84" class="text">Unify delivery operations (B2C/B2B) with secure APIs &amp; admin control.</text>
+    <circle cx="30" cy="118" r="5" class="accent"/>
+    <text x="45" y="124" class="text">Streamline orders, payments, vehicles, zones, and promotions.</text>
+    <circle cx="30" cy="158" r="5" class="accent"/>
+    <text x="45" y="164" class="text">Provide role-based access for SuperAdmin, Managers, Clients.</text>
+    <circle cx="30" cy="198" r="5" class="accent"/>
+    <text x="45" y="204" class="text">Deliver analytics, tracking, and exports for operational insight.</text>
+    <circle cx="30" cy="238" r="5" class="accent"/>
+    <text x="45" y="244" class="text">Ensure reliability with queues, caching, and robust validation.</text>
+  </g>
+
+  <!-- Architecture (Center) -->
+  <g transform="translate(540,160)">
+    <rect class="card" x="0" y="0" width="520" height="580" rx="14"/>
+    <text x="22" y="40" class="subtitle">High‑Level Architecture</text>
+
+    <!-- Clients -->
+    <rect x="22" y="70" width="155" height="70" rx="10" class="chip"/>
+    <text x="34" y="113" class="label">Mobile App</text>
+    <rect x="202" y="70" width="155" height="70" rx="10" class="chip"/>
+    <text x="214" y="113" class="label">Web Admin</text>
+
+    <!-- API Layer -->
+    <rect x="22" y="170" width="470" height="140" rx="12" class="accent" opacity="0.12"/>
+    <rect x="22" y="170" width="470" height="140" rx="12" class="card"/>
+    <text x="38" y="200" class="subtitle">Laravel API Layer</text>
+    <text x="38" y="230" class="text">Auth · Orders · Payments · Promos · Users · Settings</text>
+    <text x="38" y="255" class="text">Validation · Policies/Middleware · Webhooks/Idempotency</text>
+
+    <!-- Data & Services -->
+    <rect x="22" y="340" width="470" height="200" rx="12" class="card"/>
+    <text x="38" y="370" class="subtitle">Data &amp; Services</text>
+
+    <rect x="38" y="390" width="135" height="60" rx="10" class="chip"/>
+    <text x="52" y="426" class="label">MySQL (RDS)</text>
+
+    <rect x="188" y="390" width="135" height="60" rx="10" class="chip"/>
+    <text x="202" y="426" class="label">Redis / Queue</text>
+
+    <rect x="338" y="390" width="135" height="60" rx="10" class="chip"/>
+    <text x="352" y="426" class="label">File Storage</text>
+
+    <rect x="38" y="460" width="185" height="60" rx="10" class="chip"/>
+    <text x="52" y="496" class="label">Payment Gateway</text>
+
+    <rect x="238" y="460" width="235" height="60" rx="10" class="chip"/>
+    <text x="252" y="496" class="label">Notifications (Email/SMS/Push)</text>
+
+    <!-- Arrows -->
+    <line x1="100" y1="140" x2="100" y2="168" class="arrow"/>
+    <line x1="280" y1="140" x2="280" y2="168" class="arrow"/>
+    <line x1="280" y1="310" x2="280" y2="338" class="arrow"/>
+
+    <!-- Legend -->
+    <g transform="translate(22,560)">
+      <rect x="0" y="0" width="470" height="20" rx="10" class="accent" opacity="0.12"/>
+      <text x="12" y="15" class="text">Flow: Clients → Laravel API → Data/Services (arrows indicate primary request path)</text>
+    </g>
+  </g>
+
+  <!-- Key Modules (Right) -->
+  <g transform="translate(1090,160)">
+    <rect class="card" x="0" y="0" width="470" height="330" rx="14"/>
+    <text x="22" y="40" class="subtitle">Key Modules</text>
+
+    <circle cx="30" cy="78" r="5" class="accent"/>
+    <text x="45" y="84" class="text">Orders, Customers, Vehicles, Zones</text>
+
+    <circle cx="30" cy="118" r="5" class="accent"/>
+    <text x="45" y="124" class="text">Payments (Online · Apple Pay · Wallet · COD)</text>
+
+    <circle cx="30" cy="158" r="5" class="accent"/>
+    <text x="45" y="164" class="text">Promotions (rules, usage caps, windows)</text>
+
+    <circle cx="30" cy="198" r="5" class="accent"/>
+    <text x="45" y="204" class="text">RBAC (SuperAdmin · Managers · Clients)</text>
+
+    <circle cx="30" cy="238" r="5" class="accent"/>
+    <text x="45" y="244" class="text">Analytics · Tracking · Reports/Exports</text>
+
+    <circle cx="30" cy="278" r="5" class="accent"/>
+    <text x="45" y="284" class="text">Settings (working hours, fees, packages)</text>
+  </g>
+
+  <!-- Quality & Security (Bottom) -->
+  <g transform="translate(40,480)">
+    <rect class="card" x="0" y="280" width="1520" height="160" rx="14"/>
+    <text x="22" y="320" class="subtitle">Security &amp; Quality</text>
+
+    <rect x="22" y="340" width="230" height="44" rx="22" class="chip"/>
+    <text x="40" y="368" class="chipText">Auth, Policies &amp; RBAC</text>
+
+    <rect x="270" y="340" width="250" height="44" rx="22" class="chip"/>
+    <text x="288" y="368" class="chipText">Validation &amp; Error Handling</text>
+
+    <rect x="540" y="340" width="230" height="44" rx="22" class="chip"/>
+    <text x="558" y="368" class="chipText">Webhooks &amp; Idempotency</text>
+
+    <rect x="790" y="340" width="230" height="44" rx="22" class="chip"/>
+    <text x="808" y="368" class="chipText">Caching &amp; Queues</text>
+
+    <rect x="1040" y="340" width="250" height="44" rx="22" class="chip"/>
+    <text x="1058" y="368" class="chipText">OpenAPI/Swagger Docs</text>
+
+    <rect x="1310" y="340" width="230" height="44" rx="22" class="chip"/>
+    <text x="1328" y="368" class="chipText">CI-ready Structure</text>
+  </g>
+
+  <!-- Footer note -->
+  <g transform="translate(40,860)">
+    <text x="0" y="0" class="text">© 2025 VROOM (NDA) — Diagram for portfolio demonstration purposes.</text>
+  </g>
+</svg>
