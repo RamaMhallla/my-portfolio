@@ -2,14 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <title>Rama Mhalla | Portfolio</title>
+
+    <!-- Typography (same as theme) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+
     <style>
       :root {
         --primary-color: #2b3d5b;
@@ -18,15 +24,57 @@
         --light-color: #f8f9fa;
         --dark-color: #212529;
         --text-color: #495057;
+
+        --radius: 12px;
+        --shadow: 0 8px 24px rgba(19, 31, 53, 0.08);
+        --p-size: clamp(1.02rem, 0.35vw + 1rem, 1.14rem);
+        --p-line: 1.75;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html:focus-within {
+        scroll-behavior: smooth;
       }
 
       body {
-        font-family: "Poppins", sans-serif;
+        font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto,
+          Arial, sans-serif;
         margin: 0;
-        padding: 0;
         background-color: var(--light-color);
         color: var(--text-color);
-        line-height: 1.6;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      p {
+        font-size: var(--p-size);
+        line-height: var(--p-line);
+      }
+      /* Skip link for a11y */
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      .skip-link:focus {
+        position: fixed;
+        left: 1rem;
+        top: 1rem;
+        z-index: 1000;
+        width: auto;
+        height: auto;
+        padding: 0.6rem 0.9rem;
+        background: var(--accent-color);
+        color: #062033;
+        border-radius: 8px;
+        outline: none;
+        box-shadow: var(--shadow);
       }
 
       header {
@@ -40,21 +88,25 @@
         text-align: center;
         position: relative;
         overflow: hidden;
+        box-shadow: var(--shadow);
       }
 
       header h1 {
         margin: 0;
-        font-size: 2.5rem;
+        font-size: clamp(2rem, 2.6vw + 1rem, 2.6rem);
         font-weight: 600;
-        position: relative;
+        letter-spacing: 0.2px;
       }
 
       header p {
-        font-size: 1.2rem;
-        opacity: 0.9;
-        max-width: 700px;
-        margin: 1rem auto 0;
-        position: relative;
+        font-size: clamp(1rem, 0.5vw + 0.9rem, 1.15rem);
+        opacity: 0.95;
+        max-width: 760px;
+        margin: 0.5rem auto 0;
+      }
+
+      main {
+        display: block;
       }
 
       section {
@@ -65,8 +117,8 @@
 
       h2 {
         color: var(--primary-color);
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
+        font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);
+        margin: 0 0 1.5rem;
         position: relative;
         padding-bottom: 0.5rem;
       }
@@ -79,61 +131,76 @@
         width: 60px;
         height: 3px;
         background-color: var(--accent-color);
+        border-radius: 2px;
       }
 
       .project {
         background-color: white;
         margin-bottom: 2rem;
         padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(58, 90, 122, 0.08);
         border-left: 4px solid var(--accent-color);
       }
 
       .project-header {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: start;
+        gap: 1rem;
         margin-bottom: 1rem;
+        flex-wrap: wrap;
       }
 
       .project-links {
         display: flex;
-        gap: 1rem;
+        gap: 0.75rem;
+        flex-wrap: wrap;
       }
 
       .demo-link,
       .code-link {
+        display: inline-block;
         padding: 0.5rem 1rem;
-        border-radius: 4px;
+        border-radius: 8px;
         font-size: 0.9rem;
         font-weight: 500;
-        transition: all 0.3s ease;
+        transition: transform 0.12s ease, box-shadow 0.12s ease,
+          background-color 0.2s ease, color 0.2s ease;
+        text-decoration: none;
+        line-height: 1;
       }
 
       .demo-link {
         background-color: var(--accent-color);
-        color: white;
+        color: #072233;
       }
 
       .demo-link:hover {
-        background-color: #3aa8d8;
-        text-decoration: none;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(79, 195, 247, 0.25);
       }
 
       .code-link {
-        background-color: white;
+        background-color: #fff;
         color: var(--accent-color);
         border: 1px solid var(--accent-color);
       }
 
       .code-link:hover {
         background-color: #f0f9ff;
-        text-decoration: none;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(79, 195, 247, 0.18);
       }
 
       .project-content {
         margin-top: 1rem;
+      }
+
+      .project-content h4 {
+        margin: 0.25rem 0 0.75rem;
+        color: var(--primary-color);
       }
 
       .features-list {
@@ -164,13 +231,20 @@
         background-color: #e3f2fd;
         color: var(--secondary-color);
         padding: 0.3rem 0.8rem;
-        border-radius: 20px;
+        border-radius: 999px;
         font-size: 0.8rem;
+        border: 1px solid rgba(79, 195, 247, 0.25);
+        transition: transform 0.12s ease;
       }
 
+      .tech-tags li:hover {
+        transform: translateY(-1px);
+      }
+
+      /* ========== Carousel (uses img/ path) ========== */
       .carousel-container {
         width: 100%;
-        max-width: 400px;
+        max-width: 880px;
         margin: 2rem auto;
         position: relative;
       }
@@ -178,28 +252,44 @@
       .carousel {
         width: 100%;
         overflow: hidden;
-        border-radius: 8px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: #fff;
+        transition: height 0.3s ease;
       }
 
       .slides {
         display: flex;
+        will-change: transform;
         transition: transform 0.5s ease-in-out;
+        touch-action: pan-y;
       }
 
       .slide {
         min-width: 100%;
         box-sizing: border-box;
         text-align: center;
+        background: #fff;
+      }
+
+      /* Centre images, no cropping, handle tall images gracefully */
+      .slide .media {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--light-color);
+        overflow: hidden;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       }
 
       .slide img {
         max-width: 100%;
-        max-height: 500px;
-        width: auto;
         height: auto;
+        width: auto;
+        max-height: 90vh;
+        object-fit: contain;
         display: block;
-        margin: 0 auto;
         border-radius: 6px;
       }
 
@@ -213,10 +303,15 @@
         width: 12px;
         height: 12px;
         margin: 0 5px;
-        background-color: #ccc;
+        background-color: #cfd8e3;
         border-radius: 50%;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.2s ease, transform 0.12s ease;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .dot:hover {
+        transform: translateY(-1px);
       }
 
       .dot.active {
@@ -230,26 +325,28 @@
         display: flex;
         justify-content: space-between;
         transform: translateY(-50%);
+        pointer-events: none;
       }
 
       .carousel-nav button {
-        background-color: rgba(255, 255, 255, 0.7);
-        border: none;
-        width: 40px;
-        height: 40px;
+        pointer-events: auto;
+        background-color: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
         font-size: 1.2rem;
         cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: grid;
+        place-items: center;
         color: var(--primary-color);
-        transition: all 0.3s ease;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
       }
 
       .carousel-nav button:hover {
-        background-color: var(--accent-color);
-        color: white;
+        background-color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
       }
 
       footer {
@@ -264,27 +361,23 @@
         .carousel-container {
           max-width: 100%;
         }
-
-        .slide img {
-          max-height: 400px;
-        }
       }
 
-      @media (max-width: 480px) {
-        .slide img {
-          max-height: 300px;
+      @media (prefers-reduced-motion: reduce) {
+        .slides {
+          transition: none;
         }
-
-        .carousel-nav button {
-          width: 30px;
-          height: 30px;
-          font-size: 1rem;
+        .demo-link,
+        .code-link {
+          transition: none;
         }
       }
     </style>
   </head>
   <body>
-    <header>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header role="banner">
       <h1>Rama Mhalla</h1>
       <p>
         MSc Student in Telecommunication Engineering | AI, IoT, 5G, Cloud & Edge
@@ -292,211 +385,365 @@
       </p>
     </header>
 
-    <section>
-      <h2>Smart Health Monitoring System</h2>
-      <div class="project">
-        <div class="project-header">
-          <h3>Smart Health Monitoring System</h3>
-          <div class="project-links">
-            <a href="#" class="demo-link">Live Demo</a>
-            <a href="#" class="code-link">View Code</a>
-          </div>
-        </div>
+    <main id="main" role="main">
+      <section aria-labelledby="proj-title">
+        <h2 id="proj-title">Smart Health Monitoring System</h2>
 
-        <div class="project-content">
-          <h4>Project Description</h4>
-          <p>
-            A hybrid health monitoring system designed to empower individuals to
-            monitor their vital signs in real-time using wearable sensors. The
-            system leverages both edge and cloud computing to ensure reliable
-            operation across diverse environments — even when internet
-            connectivity is unavailable. It integrates a Flutter-based mobile
-            app, MQTT-based IoT data acquisition, and intelligent AI models for
-            both heart disease prediction and X-ray-based pneumonia detection.
-          </p>
+        <article class="project" aria-label="Smart Health Monitoring System">
+          <div class="project-content">
+            <h4>Project Description</h4>
+            <p>
+              A hybrid health monitoring system designed to empower individuals
+              to monitor their vital signs in real-time using wearable sensors.
+              The system leverages edge and cloud computing for reliable
+              operation, integrates a Flutter-based app, MQTT-based IoT data
+              acquisition, and AI models for heart disease prediction and
+              X-ray–based pneumonia detection.
+            </p>
 
-          <h4>Key Features</h4>
-          <ul class="features-list">
-            <li>
-              Real-time monitoring of vital signs such as heart rate, SpO₂, and
-              temperature via sensors
-            </li>
-            <li>
-              Automatic switching between local (Edge/TFLite) and cloud (AWS
-              SageMaker) AI models based on network availability
-            </li>
-            <li>
-              Dual-mode heart and pneumonia prediction using machine learning
-            </li>
-            <li>
-              Cross-platform mobile app built with Flutter, ensuring
-              accessibility on both iOS and Android
-            </li>
-            <li>
-              Offline capability with support for manual data entry and local
-              database storage
-            </li>
-            <li>
-              Full-stack integration with AWS services including Cognito,
-              Lambda, DynamoDB, and QuickSight for authentication, inference,
-              storage, and analytics
-            </li>
-          </ul>
-          <section>
-            <h2>System Architecture</h2>
-            <div class="project">
-              <h3>AWS Cloud Integration Diagram</h3>
-              <img
-                src="aws.jpg"
-                alt="AWS Cloud Architecture Diagram"
-                style="
-                  width: 100%;
-                  border-radius: 8px;
-                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                  margin-bottom: 1.5rem;
-                "
-              />
+            <h4>Key Features</h4>
+            <ul class="features-list">
+              <li>
+                Real-time monitoring (heart rate, SpO₂, temperature) via sensors
+              </li>
+              <li>
+                Automatic switching between local (Edge/TFLite) and cloud (AWS
+                SageMaker)
+              </li>
+              <li>Dual-mode prediction (heart, pneumonia) using ML models</li>
+              <li>
+                Cross-platform Flutter app with offline capability and local DB
+              </li>
+              <li>Full-stack AWS: Cognito, Lambda, DynamoDB, QuickSight</li>
+            </ul>
 
-              <h3>Mobile App Navigation & Prediction Flow</h3>
-              <img
-                src="flutter workflow.jpg"
-                alt="App Navigation Diagram"
-                style="
-                  width: 100%;
-                  border-radius: 8px;
-                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                  margin-bottom: 1.5rem;
-                "
-              />
+            <!-- Architecture (img/ folder) -->
+            <section aria-labelledby="arch-title">
+              <h2 id="arch-title">System Architecture</h2>
 
-              <h3>Full System Workflow (ACOSO-Meth)</h3>
-              <img
-                src="ACOSO-Meth Workflow.jpg"
-                alt="ACOSO-Meth Workflow"
-                style="
-                  width: 100%;
-                  border-radius: 8px;
-                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                  margin-bottom: 1.5rem;
-                "
-              />
+              <article class="project" aria-label="Architecture diagrams">
+                <h3>AWS Cloud Integration Diagram</h3>
+                <img
+                  src="img/aws architecture.png"
+                  alt="AWS cloud components and their integrations"
+                  style="
+                    width: 100%;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                    margin-bottom: 1.5rem;
+                  "
+                  loading="lazy"
+                  decoding="async"
+                />
 
-              <p style="margin-top: 2rem">
-                These diagrams illustrate the end-to-end integration of the
-                Smart Healthcare Monitoring System across cloud, mobile, and IoT
-                layers. They include:
-              </p>
-              <ul class="features-list">
-                <li>
-                  Detailed AWS Service Architecture (Cognito, Lambda, SageMaker,
-                  DynamoDB, QuickSight)
-                </li>
-                <li>
-                  Mobile Application Page Flow for Edge vs Cloud AI models
-                </li>
-                <li>Complete ACOSO-Meth Functional and Domain Modeling</li>
-              </ul>
-            </div>
-          </section>
-          <h4>Gallery</h4>
-          <div class="carousel-container">
-            <div class="carousel">
-              <div class="slides" id="slides">
-                <div class="slide">
-                  <img src="register.jpg" alt="Registration screen" />
-                </div>
-                <div class="slide">
-                  <img src="login.jpg" alt="Login interface" />
-                </div>
-                <div class="slide">
-                  <img src="xray.jpg" alt="X-ray analysis" />
-                </div>
-                <div class="slide">
-                  <img src="heart.jpg" alt="Heart rate monitoring" />
-                </div>
-                <div class="slide">
-                  <img src="aws_result.jpg" alt="AWS Result" />
-                </div>
-                <div class="slide">
-                  <img src="local.jpg" alt="Local Result" />
-                </div>
-                <div class="slide">
-                  <img src="medical_history.jpg" alt="medical_history" />
+                <h3>Mobile App Navigation & Prediction Flow</h3>
+                <img
+                  src="img/flutter workflow.jpg"
+                  alt="Flutter app navigation and prediction flow"
+                  style="
+                    width: 100%;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                    margin-bottom: 1.5rem;
+                  "
+                  loading="lazy"
+                  decoding="async"
+                />
+
+                <h3>Full System Workflow (ACOSO-Meth)</h3>
+                <img
+                  src="img/ACOSO-Meth Workflow.jpg"
+                  alt="ACOSO-Meth end-to-end workflow"
+                  style="
+                    width: 100%;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                    margin-bottom: 1.5rem;
+                  "
+                  loading="lazy"
+                  decoding="async"
+                />
+
+                <p style="margin-top: 1rem">
+                  These diagrams illustrate end-to-end integration across cloud,
+                  mobile, and IoT layers.
+                </p>
+                <ul class="features-list">
+                  <li>
+                    AWS Services: Cognito, Lambda, SageMaker, DynamoDB,
+                    QuickSight
+                  </li>
+                  <li>Edge vs. Cloud AI selection</li>
+                  <li>Functional and domain modeling (ACOSO-Meth)</li>
+                </ul>
+              </article>
+            </section>
+
+            <!-- Gallery (img/ folder) -->
+            <h4>Gallery</h4>
+            <div
+              class="carousel-container"
+              aria-roledescription="carousel"
+              aria-label="App screens carousel"
+            >
+              <div class="carousel" id="carousel">
+                <div class="slides" id="slides" aria-live="polite">
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="img/register.jpg"
+                        alt="Registration screen"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="img/login.jpg"
+                        alt="Login interface"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="img/xray.jpg"
+                        alt="X-ray analysis feature"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="img/heart.jpg"
+                        alt="Heart rate monitoring"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="img/aws_result.jpg"
+                        alt="Prediction result from AWS"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="img/local.jpg"
+                        alt="Local edge inference result"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="img/medical_history.jpg"
+                        alt="Medical history records"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <div class="carousel-nav" aria-hidden="false">
+                <button type="button" aria-label="Previous slide" id="prevBtn">
+                  ❮
+                </button>
+                <button type="button" aria-label="Next slide" id="nextBtn">
+                  ❯
+                </button>
+              </div>
+
+              <div class="dots" id="dots" aria-hidden="false"></div>
             </div>
-            <div class="carousel-nav">
-              <button onclick="prevSlide()">❮</button>
-              <button onclick="nextSlide()">❯</button>
-            </div>
-            <div class="dots" id="dots">
-              <span class="dot active" onclick="moveToSlide(0)"></span>
-              <span class="dot" onclick="moveToSlide(1)"></span>
-              <span class="dot" onclick="moveToSlide(2)"></span>
-              <span class="dot" onclick="moveToSlide(3)"></span>
-            </div>
+
+            <h4>Technologies Used</h4>
+            <ul class="tech-tags" aria-label="Technologies">
+              <li>Flutter</li>
+              <li>AWS IoT Core</li>
+              <li>SageMaker</li>
+              <li>Python</li>
+              <li>TensorFlow Lite</li>
+              <li>MQTT</li>
+            </ul>
           </div>
+        </article>
+      </section>
+    </main>
 
-          <h4>Technologies Used</h4>
-          <ul class="tech-tags">
-            <li>Flutter</li>
-            <li>AWS IoT Core</li>
-            <li>SageMaker</li>
-            <li>Python</li>
-            <li>TensorFlow Lite</li>
-            <li>MQTT</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <footer>
+    <footer role="contentinfo">
       <p>&copy; 2025 Rama Mhalla | All rights reserved.</p>
     </footer>
 
     <script>
-      let currentSlide = 0;
-      const slides = document.getElementById("slides");
-      const dots = document.querySelectorAll(".dot");
-      const totalSlides = document.querySelectorAll(".slide").length;
-      let slideInterval;
+      // Accessible, responsive carousel with:
+      // - object-fit: contain (no cropping)
+      // - adaptive height (based on current slide)
+      // - keyboard and pointer swipe support
+      // - dynamic dots to match slides
+      (function () {
+        const track = document.getElementById("slides");
+        if (!track) return;
 
-      function moveToSlide(slideIndex) {
-        currentSlide = slideIndex;
-        slides.style.transform = `translateX(-${slideIndex * 100}%)`;
-        updateDots();
-        resetInterval();
-      }
+        const carousel = document.getElementById("carousel");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const dotsWrap = document.getElementById("dots");
 
-      function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        moveToSlide(currentSlide);
-      }
+        const slides = Array.from(track.children);
+        const total = slides.length;
 
-      function prevSlide() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        moveToSlide(currentSlide);
-      }
+        let current = 0;
+        let timer;
+        let paused = false;
 
-      function updateDots() {
-        dots.forEach((dot, idx) => {
-          dot.classList.toggle("active", idx === currentSlide);
+        // Build dots dynamically to match slide count
+        const dots = slides.map((_, i) => {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "dot" + (i === 0 ? " active" : "");
+          dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+          dot.addEventListener("click", () => moveTo(i));
+          dotsWrap.appendChild(dot);
+          return dot;
         });
-      }
 
-      function startInterval() {
-        slideInterval = setInterval(() => {
-          nextSlide();
-        }, 5000);
-      }
+        function setActiveDot(index) {
+          dots.forEach((d, i) => d.classList.toggle("active", i === index));
+        }
 
-      function resetInterval() {
-        clearInterval(slideInterval);
-        startInterval();
-      }
+        function moveTo(index) {
+          current = (index + total) % total;
+          track.style.transform = `translateX(-${current * 100}%)`;
+          setActiveDot(current);
+          setHeight();
+          restart();
+        }
 
-      // Initialize
-      startInterval();
+        function next() {
+          moveTo(current + 1);
+        }
+
+        function prev() {
+          moveTo(current - 1);
+        }
+
+        // Adaptive height (match current slide media height)
+        function setHeight() {
+          const media = slides[current]?.querySelector(".media");
+          if (!media) return;
+          // Defer to ensure images are laid out
+          requestAnimationFrame(() => {
+            const h = media.scrollHeight;
+            carousel.style.height = h + "px";
+          });
+        }
+
+        // Buttons
+        nextBtn.addEventListener("click", next, { passive: true });
+        prevBtn.addEventListener("click", prev, { passive: true });
+
+        // Keyboard (arrow keys)
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight") next();
+          if (e.key === "ArrowLeft") prev();
+        });
+
+        // Pointer swipe
+        let startX = 0,
+          nowX = 0,
+          dragging = false;
+
+        track.addEventListener("pointerdown", (e) => {
+          dragging = true;
+          startX = nowX = e.clientX;
+          track.style.transition = "none";
+        });
+
+        track.addEventListener("pointermove", (e) => {
+          if (!dragging) return;
+          nowX = e.clientX;
+          const dx = nowX - startX;
+          track.style.transform = `translateX(calc(-${
+            current * 100
+          }% + ${dx}px))`;
+        });
+
+        function endDrag() {
+          if (!dragging) return;
+          track.style.transition = "";
+          const dx = nowX - startX;
+          if (Math.abs(dx) > 60) {
+            dx < 0 ? next() : prev();
+          } else {
+            moveTo(current);
+          }
+          dragging = false;
+        }
+
+        track.addEventListener("pointerup", endDrag);
+        track.addEventListener("pointercancel", endDrag);
+        track.addEventListener("pointerleave", endDrag);
+
+        // Pause autoplay on hover/focus for usability
+        const wrap = track.closest(".carousel-container");
+        const pause = () => {
+          paused = true;
+          clearInterval(timer);
+        };
+        const play = () => {
+          paused = false;
+          restart();
+        };
+        wrap.addEventListener("mouseenter", pause);
+        wrap.addEventListener("mouseleave", play);
+        wrap.addEventListener("focusin", pause);
+        wrap.addEventListener("focusout", play);
+
+        function restart() {
+          clearInterval(timer);
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+            return;
+          if (!paused) timer = setInterval(next, 5000);
+        }
+
+        // Ensure height correct once images are loaded
+        const imgs = track.querySelectorAll("img");
+        let pending = imgs.length;
+        if (pending === 0) setHeight();
+        imgs.forEach((img) => {
+          if (img.complete) {
+            if (--pending === 0) setHeight();
+          } else {
+            img.addEventListener(
+              "load",
+              () => {
+                if (--pending === 0) setHeight();
+              },
+              { once: true }
+            );
+          }
+        });
+
+        // Initial render
+        moveTo(0);
+      })();
     </script>
   </body>
 </html>

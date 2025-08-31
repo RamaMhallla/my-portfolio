@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rama Mhalla | Portfolio — VROOM (Laravel)</title>
+
+    <!-- Typography (same as portfolio) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* =========================
+       Design Tokens / Theme
+    ========================== */
+      :root {
+        --primary: #2b3d5b;
+        --secondary: #3a5a7a;
+        --accent: #4fc3f7;
+        --surface: #ffffff;
+        --surface-subtle: #f6f8fb;
+        --text: #495057;
+        --muted: #6c757d;
+        --ring: rgba(79, 195, 247, 0.45);
+        --shadow: 0 8px 28px rgba(19, 31, 53, 0.08);
+        --radius: 14px;
+        --fs-hero: clamp(1.75rem, 2.5vw + 1rem, 2.25rem);
+        --fs-h2: clamp(1.35rem, 1.6vw + 0.9rem, 1.75rem);
+        --fs-h3: clamp(1.05rem, 1.1vw + 0.8rem, 1.25rem);
+        --fs-body: clamp(0.98rem, 0.3vw + 0.9rem, 1.05rem);
+        --fs-small: 0.9rem;
+        --space-1: 0.5rem;
+        --space-2: 0.75rem;
+        --space-3: 1rem;
+        --space-4: 1.5rem;
+        --space-5: 2rem;
+        --space-6: 3rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --surface: #0f1420;
+          --surface-subtle: #111a2a;
+          --text: #d7e2f1;
+          --muted: #a7b4c9;
+          --primary: #cfe4ff;
+          --secondary: #b7d0ec;
+          --accent: #7ad6ff;
+          --ring: rgba(122, 214, 255, 0.45);
+          --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+        img {
+          opacity: 0.98;
+        }
+      }
+
+      /* =========================
+       Base / Layout
+    ========================== */
+      * {
+        box-sizing: border-box;
+      }
+      html:focus-within {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+          sans-serif;
+        background: var(--surface-subtle);
+        color: var(--text);
+        line-height: 1.7;
+        font-size: var(--fs-body);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Skip link (a11y) */
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      .skip-link:focus {
+        position: fixed;
+        left: 1rem;
+        top: 1rem;
+        z-index: 1000;
+        width: auto;
+        height: auto;
+        padding: 0.6rem 0.9rem;
+        background: var(--accent);
+        color: #06121f;
+        border-radius: 8px;
+        outline: none;
+      }
+
+      header[role="banner"] {
+        position: relative;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: #fff;
+        text-align: center;
+        padding: var(--space-6) var(--space-4);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+      /* Subtle parallax shimmer (GPU-friendly) */
+      header[role="banner"]::after {
+        content: "";
+        position: absolute;
+        inset: -40% -40% auto auto;
+        height: 240%;
+        width: 60%;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(255, 255, 255, 0.18),
+          transparent 60%
+        );
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+        pointer-events: none;
+        animation: float 18s ease-in-out infinite alternate;
+      }
+      @keyframes float {
+        to {
+          transform: translate3d(-6%, 4%, 0) rotate(2deg);
+        }
+      }
+
+      header h1 {
+        margin: 0 0 0.25rem;
+        font-size: var(--fs-hero);
+        font-weight: 600;
+        letter-spacing: 0.2px;
+      }
+      header p {
+        margin: 0.25rem 0 0;
+        opacity: 0.95;
+      }
+
+      main {
+        padding: var(--space-6) var(--space-4);
+        max-width: 1040px;
+        margin: 0 auto;
+      }
+
+      h2 {
+        color: var(--primary);
+        font-size: var(--fs-h2);
+        margin: 0 0 var(--space-3);
+        padding-bottom: 0.5rem;
+        position: relative;
+        letter-spacing: 0.2px;
+      }
+      h2::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 64px;
+        height: 3px;
+        background: var(--accent);
+        border-radius: 2px;
+      }
+
+      /* Card */
+      .project {
+        background: var(--surface);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: var(--space-5);
+        border: 1px solid rgba(58, 90, 122, 0.08);
+        --lift: 0;
+        transform: translateY(var(--lift));
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .project:hover {
+        --lift: -2px;
+        box-shadow: 0 14px 40px rgba(17, 34, 51, 0.12);
+      }
+      .project-header h3 {
+        margin: 0;
+        color: var(--primary);
+        font-size: var(--fs-h3);
+      }
+      .project-header p {
+        margin: 0.35rem 0 0;
+        color: var(--muted);
+      }
+
+      .links {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: var(--space-3);
+      }
+      .btn {
+        display: inline-block;
+        padding: 0.6rem 1rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        line-height: 1;
+        transition: transform 0.12s ease, box-shadow 0.12s ease,
+          background-color 0.2s ease, color 0.2s ease;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #072233;
+      }
+      .btn-outline {
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        background: transparent;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(79, 195, 247, 0.25);
+      }
+      .btn:active {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+      .btn:focus-visible {
+        outline: 3px solid var(--ring);
+        outline-offset: 2px;
+      }
+
+      aside.note {
+        border: 1px dashed rgba(58, 168, 216, 0.9);
+        background: color-mix(in srgb, var(--accent) 9%, transparent);
+        border-radius: 12px;
+        padding: var(--space-3);
+        margin: var(--space-4) 0;
+      }
+      aside.note strong {
+        color: var(--secondary);
+      }
+
+      .content p {
+        margin: 0 0 var(--space-3);
+      }
+
+      /* Tech chips */
+      .tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        list-style: none;
+        padding: 0;
+        margin: var(--space-3) 0 var(--space-2);
+      }
+      .tech li {
+        background: #e3f2fd;
+        color: var(--secondary);
+        padding: 0.32rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        border: 1px solid rgba(79, 195, 247, 0.25);
+        transition: transform 0.15s ease, background 0.2s ease;
+      }
+      .tech li:hover {
+        transform: translateY(-1px);
+      }
+      @media (prefers-color-scheme: dark) {
+        .tech li {
+          background: #0e2239;
+          color: #cde2ff;
+          border-color: rgba(122, 214, 255, 0.2);
+        }
+      }
+
+      /* =========================
+       Carousel (no-crop, adaptive)
+    ========================== */
+      .carousel-wrap {
+        margin: var(--space-3) auto var(--space-4);
+        max-width: 960px;
+        position: relative;
+      }
+      .carousel {
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        background: var(--surface);
+        transition: height 0.3s ease; /* JS updates height per slide */
+      }
+      .slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        will-change: transform;
+        touch-action: pan-y;
+      }
+      figure.slide {
+        min-width: 100%;
+        margin: 0;
+        text-align: center;
+        background: var(--surface);
+      }
+      .media {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--surface-subtle);
+        overflow: hidden;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      }
+      .media.is-landscape {
+        aspect-ratio: var(--landscape-ar, 16/9);
+      }
+      .media.is-portrait {
+        aspect-ratio: auto;
+      }
+      .media img {
+        max-width: 100%;
+        height: auto;
+        width: auto;
+        max-height: 90vh;
+        object-fit: contain;
+        display: block;
+      }
+      figure.slide figcaption {
+        padding: 0.65rem;
+        color: var(--muted);
+        font-size: var(--fs-small);
+      }
+
+      .nav {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        pointer-events: none;
+      }
+      .nav button {
+        pointer-events: auto;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+      .nav button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+      }
+      .nav button:focus-visible {
+        outline: 3px solid var(--ring);
+        outline-offset: 2px;
+      }
+
+      /* Slide status pill (a11y feedback) */
+      .status {
+        position: absolute;
+        right: 0.75rem;
+        bottom: 0.75rem;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        font-size: 0.8rem;
+        padding: 0.35rem 0.6rem;
+        border-radius: 999px;
+        backdrop-filter: saturate(120%) blur(4px);
+      }
+
+      /* Reveal on scroll (progressive enhancement) */
+      .reveal {
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Motion safety */
+      @media (prefers-reduced-motion: reduce) {
+        .slides {
+          transition: none;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+        header[role="banner"]::after {
+          animation: none;
+        }
+      }
+
+      footer {
+        background: var(--primary);
+        color: #fff;
+        text-align: center;
+        padding: var(--space-5);
+        margin-top: var(--space-6);
+      }
+
+      /* Responsive rhythm */
+      @media (max-width: 720px) {
+        .project {
+          padding: var(--space-4);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header role="banner">
+      <h1>Rama Mhalla</h1>
+      <p>
+        MSc Student in Telecommunication Engineering · AI · IoT · 5G · Cloud &
+        Edge Computing
+      </p>
+    </header>
+
+    <main id="main" role="main">
+      <section id="project-vroom" aria-labelledby="vroom-title">
+        <h2 id="vroom-title" class="reveal">
+          VROOM — Backend Dashboard & APIs (Laravel)
+        </h2>
+
+        <article class="project reveal" aria-label="VROOM Laravel backend">
+          <header class="project-header">
+            <h3>Role: Backend Developer (Laravel)</h3>
+            <p>
+              Company engagement building a production logistics platform: admin
+              dashboard modules and public application APIs.
+            </p>
+          </header>
+
+          <aside class="note" role="note" aria-label="Confidentiality notice">
+            <strong>Source Code Confidentiality:</strong> Developed under a
+            client contract/NDA. The source code is proprietary and not
+            available for distribution. This page demonstrates functionality
+            through interface screenshots.
+          </aside>
+
+          <section class="content" aria-labelledby="overview-title">
+            <h3
+              id="overview-title"
+              style="color: var(--primary); font-size: var(--fs-h3)"
+            >
+              Project Overview
+            </h3>
+            <p>
+              VROOM is a delivery and logistics platform serving B2C and B2B
+              flows. The Laravel backend powers secure REST APIs and an
+              administration dashboard for orders, customers, payments,
+              vehicles, zones, roles/permissions, promo codes, notifications,
+              and operational settings (working hours, capacities, fees).
+            </p>
+          </section>
+
+          <!-- Screenshots -->
+          <section aria-labelledby="shots-title">
+            <h3
+              id="shots-title"
+              style="color: var(--primary); font-size: var(--fs-h3)"
+            >
+              Dashboard Showcase
+            </h3>
+
+            <div class="carousel-wrap" aria-roledescription="carousel">
+              <div class="carousel" id="carousel">
+                <div class="slides" id="vroomSlides" aria-live="polite">
+                  <!-- Each slide -->
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/homepage.png"
+                        alt="Dashboard overview with KPIs, sales, and activity charts"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Dashboard Overview</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/orders.png"
+                        alt="Orders management list and filters"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Orders Management</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/customers.png"
+                        alt="Customers list and details"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Customers</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/vehicles.png"
+                        alt="Vehicles management (Car, Bike, Fridge, Van) with status"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Vehicles</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/zones.png"
+                        alt="Zones and delivery fees per vehicle type"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Zones & Delivery Fees</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/working_hours.png"
+                        alt="Working hours schedule with capacity and status"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Working Hours</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/payment_methods.png"
+                        alt="Payment methods: Online, Apple Pay, Wallet, Cash on Delivery"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Payment Methods</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/wallet_packages.png"
+                        alt="Wallet packages—tiers and status"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Wallet Packages</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/b2b_packages.png"
+                        alt="B2B packages list"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>B2B Packages</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/promo_codes.png"
+                        alt="Promo codes with discount, usage, date range, and status"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Promo Codes</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/roles.png"
+                        alt="Roles and permissions list (superAdmin, managers, client)"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Roles & Permissions (RBAC)</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/system_users.png"
+                        alt="System users with roles and status"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>System Users</figcaption>
+                  </figure>
+                  <figure class="slide">
+                    <div class="media">
+                      <img
+                        src="images/project/settings.png"
+                        alt="Key operational settings: intervals, max orders, waiting times"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <figcaption>Core Settings</figcaption>
+                  </figure>
+                </div>
+
+                <!-- a11y slide status -->
+                <div
+                  id="slideStatus"
+                  class="status"
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
+                  Slide 1 of 13
+                </div>
+              </div>
+
+              <div class="nav" aria-hidden="false">
+                <button
+                  type="button"
+                  aria-label="Previous screenshot"
+                  id="prevBtn"
+                >
+                  ❮
+                </button>
+                <button type="button" aria-label="Next screenshot" id="nextBtn">
+                  ❯
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Technical summary -->
+          <section aria-labelledby="tech-title">
+            <h3
+              id="tech-title"
+              style="color: var(--primary); font-size: var(--fs-h3)"
+            >
+              Technical Summary
+            </h3>
+            <ul>
+              <li>
+                Designed and implemented <strong>RESTful APIs</strong> for
+                orders, users, payments, promos, and configuration modules.
+              </li>
+              <li>
+                Built <strong>RBAC</strong> (SuperAdmin, managers, clients) with
+                guarded routes, policies, and middleware.
+              </li>
+              <li>
+                Integrated multiple <strong>payment options</strong> (Online
+                Payment, Apple Pay, Wallet, Cash on Delivery) incl. webhooks and
+                idempotency.
+              </li>
+              <li>
+                Developed admin <strong>analytics & reporting</strong> endpoints
+                (KPIs, vehicle mix, B2B/B2C trends, driver performance).
+              </li>
+              <li>
+                Implemented <strong>promo engine</strong> (discount, usage caps,
+                validity windows, status lifecycle).
+              </li>
+              <li>
+                Operational controls:
+                <strong
+                  >vehicles, zones, fees, working/blocking hours, wallet/B2B
+                  packages</strong
+                >.
+              </li>
+              <li>
+                Performance: query optimization (indexes, eager loading),
+                caching/queues (Redis) for reliability at load.
+              </li>
+              <li>
+                Quality: request validation, structured error handling,
+                environment-based config, OpenAPI/Swagger docs.
+              </li>
+            </ul>
+
+            <ul class="tech" aria-label="Technologies">
+              <li>Laravel</li>
+              <li>PHP</li>
+              <li>REST APIs</li>
+              <li>MySQL</li>
+              <li>Redis / Queues</li>
+              <li>RBAC</li>
+              <li>OpenAPI / Swagger</li>
+            </ul>
+          </section>
+        </article>
+      </section>
+    </main>
+
+    <footer role="contentinfo">
+      <p>&copy; 2025 Rama Mhalla · All rights reserved.</p>
+    </footer>
+
+    <script>
+      /* ============================================================
+       1) Reveal-on-scroll (IntersectionObserver)
+       - Adds .in to .reveal elements when in viewport
+       - Respects prefers-reduced-motion
+    ============================================================ */
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          document
+            .querySelectorAll(".reveal")
+            .forEach((el) => el.classList.add("in"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("in");
+                obs.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.15 }
+        );
+        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      })();
+
+      /* ============================================================
+       2) Carousel: keyboard + buttons + swipe + adaptive height
+       - Never crops (CSS uses object-fit:contain)
+       - Auto height based on current slide
+       - Arrow keys, buttons, and touch gestures
+       - a11y live region announces "Slide X of N"
+    ============================================================ */
+      (function () {
+        const track = document.getElementById("vroomSlides");
+        if (!track) return;
+
+        const carousel = document.getElementById("carousel");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const status = document.getElementById("slideStatus");
+
+        const slides = Array.from(track.children);
+        const total = slides.length;
+        let index = 0;
+
+        // Classify slides based on image natural aspect ratio
+        function classifySlides() {
+          const images = track.querySelectorAll(".media img");
+          let pending = images.length;
+          images.forEach((img) => {
+            const apply = () => {
+              const ar = img.naturalWidth / img.naturalHeight;
+              const media = img.closest(".media");
+              if (!media) return;
+              media.classList.add(ar >= 0.9 ? "is-landscape" : "is-portrait");
+              if (--pending === 0) {
+                setCarouselHeight();
+                updateStatus();
+              }
+            };
+            if (img.complete) apply();
+            else img.addEventListener("load", apply, { once: true });
+          });
+        }
+
+        function setCarouselHeight() {
+          const active = slides[index]?.querySelector(".media");
+          if (!active) return;
+          // use scrollHeight to account for portrait/tall images
+          const h = active.scrollHeight;
+          carousel.style.height = h + "px";
+        }
+
+        function render() {
+          track.style.transform = `translateX(-${index * 100}%)`;
+          setCarouselHeight();
+          updateStatus();
+        }
+
+        function updateStatus() {
+          if (!status) return;
+          status.textContent = `Slide ${index + 1} of ${total}`;
+        }
+
+        function next() {
+          index = (index + 1) % total;
+          render();
+        }
+        function prev() {
+          index = (index - 1 + total) % total;
+          render();
+        }
+
+        // Buttons
+        nextBtn.addEventListener("click", next, { passive: true });
+        prevBtn.addEventListener("click", prev, { passive: true });
+
+        // Keyboard
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight") next();
+          if (e.key === "ArrowLeft") prev();
+        });
+
+        // Touch / pointer swipe
+        let startX = 0,
+          currentX = 0,
+          isPointer = false;
+        const onDown = (x) => {
+          isPointer = true;
+          startX = currentX = x;
+        };
+        const onMove = (x) => {
+          if (!isPointer) return;
+          currentX = x;
+          // translate slightly while swiping (visual feedback)
+          const dx = currentX - startX;
+          track.style.transition = "none";
+          track.style.transform = `translateX(calc(-${
+            index * 100
+          }% + ${dx}px))`;
+        };
+        const onUp = () => {
+          if (!isPointer) return;
+          const dx = currentX - startX;
+          track.style.transition = ""; // restore
+          if (Math.abs(dx) > 60) {
+            dx < 0 ? next() : prev();
+          } else render();
+          isPointer = false;
+        };
+
+        // Pointer events (works for mouse + touch)
+        track.addEventListener("pointerdown", (e) => onDown(e.clientX));
+        track.addEventListener("pointermove", (e) => onMove(e.clientX));
+        track.addEventListener("pointerup", onUp);
+        track.addEventListener("pointercancel", onUp);
+        track.addEventListener("pointerleave", () => {
+          if (isPointer) onUp();
+        });
+
+        // Resize observer—keep height correct on viewport changes
+        let rAF;
+        window.addEventListener("resize", () => {
+          cancelAnimationFrame(rAF);
+          rAF = requestAnimationFrame(setCarouselHeight);
+        });
+
+        classifySlides();
+        render();
+
+        /* Optional autoplay respecting reduced motion */
+        let timer,
+          paused = false;
+        const prefersReduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        const wrap = track.closest(".carousel-wrap");
+        const pause = () => {
+          paused = true;
+          clearInterval(timer);
+        };
+        const play = () => {
+          paused = false;
+          restart();
+        };
+        wrap.addEventListener("mouseenter", pause);
+        wrap.addEventListener("mouseleave", play);
+        wrap.addEventListener("focusin", pause);
+        wrap.addEventListener("focusout", play);
+        function restart() {
+          clearInterval(timer);
+          if (prefersReduced) return;
+          if (!paused) timer = setInterval(next, 5000);
+        }
+        restart();
+      })();
+    </script>
+  </body>
+</html>
