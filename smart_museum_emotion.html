@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Rama Mhalla | Smart Museum Emotion Recognition</title>
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2b3d5b;
+        --secondary-color: #3a5a7a;
+        --accent-color: #4fc3f7;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --text-color: #495057;
+
+        --radius: 12px;
+        --shadow: 0 8px 24px rgba(19, 31, 53, 0.08);
+        --p-size: clamp(1.02rem, 0.35vw + 1rem, 1.14rem);
+        --p-line: 1.75;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html:focus-within {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto,
+          Arial, sans-serif;
+        margin: 0;
+        background: var(--light-color);
+        color: var(--text-color);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      p {
+        font-size: var(--p-size);
+        line-height: var(--p-line);
+      }
+
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      .skip-link:focus {
+        position: fixed;
+        left: 1rem;
+        top: 1rem;
+        z-index: 1000;
+        padding: 0.6rem 0.9rem;
+        background: var(--accent-color);
+        color: #062033;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: #fff;
+        padding: 4rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      header h1 {
+        margin: 0;
+        font-size: clamp(2rem, 2.6vw + 1rem, 2.6rem);
+        font-weight: 600;
+      }
+      header p {
+        font-size: clamp(1rem, 0.5vw + 0.9rem, 1.15rem);
+        opacity: 0.95;
+        max-width: 760px;
+        margin: 0.5rem auto 0;
+      }
+
+      nav.toc {
+        max-width: 1000px;
+        margin: -1rem auto 0;
+        background: #fff;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1rem 1.25rem;
+        border: 1px solid rgba(58, 90, 122, 0.08);
+      }
+      nav.toc a {
+        color: var(--secondary-color);
+        text-decoration: none;
+      }
+      nav.toc a:hover {
+        text-decoration: underline;
+      }
+
+      main {
+        display: block;
+      }
+      section {
+        padding: 3rem 2rem;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      h2 {
+        color: var(--primary-color);
+        font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);
+        margin: 0 0 1.5rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+      h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--accent-color);
+        border-radius: 2px;
+      }
+      h3 {
+        color: var(--secondary-color);
+        margin: 1.2rem 0 0.6rem;
+      }
+
+      .project {
+        background: #fff;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(58, 90, 122, 0.08);
+        border-left: 4px solid var(--accent-color);
+      }
+      .grid {
+        display: grid;
+        gap: 1rem;
+      }
+      @media (min-width: 820px) {
+        .grid.two {
+          grid-template-columns: 1fr 1fr;
+        }
+        .grid.three {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .highlight {
+        background: #e8f6ff;
+        border: 1px solid rgba(79, 195, 247, 0.35);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+      .kv {
+        display: grid;
+        grid-template-columns: 170px 1fr;
+        gap: 0.5rem 1rem;
+        font-size: 0.98rem;
+      }
+      .kv .key {
+        color: var(--secondary-color);
+        font-weight: 600;
+      }
+      .badge {
+        display: inline-block;
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+        background: #e3f2fd;
+        border: 1px solid rgba(79, 195, 247, 0.25);
+        color: var(--secondary-color);
+        font-size: 0.8rem;
+        margin: 0.15rem 0.25rem 0 0;
+      }
+      .tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        list-style: none;
+        padding: 0;
+      }
+      .tech-tags li {
+        background: #e3f2fd;
+        color: var(--secondary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        border: 1px solid rgba(79, 195, 247, 0.25);
+        transition: transform 0.12s ease;
+      }
+      .tech-tags li:hover {
+        transform: translateY(-1px);
+      }
+
+      /* Features list used in Future Work */
+      .features-list {
+        padding-left: 1.2rem;
+      }
+      .features-list li {
+        margin-bottom: 0.5rem;
+        position: relative;
+      }
+      .features-list li::before {
+        content: "▹";
+        position: absolute;
+        left: -1rem;
+        color: var(--accent-color);
+      }
+
+      .callout {
+        background: #fff9e6;
+        border: 1px solid #ffe7a3;
+        color: #7a5a00;
+        border-radius: 10px;
+        padding: 1rem;
+      }
+
+      a.btn {
+        display: inline-block;
+        margin: 0.2rem 0.25rem 0 0;
+        padding: 0.5rem 0.9rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+      }
+      a.btn.primary {
+        background: var(--accent-color);
+        color: #072233;
+      }
+      a.btn.ghost {
+        background: #fff;
+        color: var(--accent-color);
+        border: 1px solid var(--accent-color);
+      }
+
+      /* Carousel (multi-instance) */
+      .carousel-container {
+        width: 100%;
+        max-width: 880px;
+        margin: 2rem auto;
+        position: relative;
+      }
+      .carousel {
+        width: 100%;
+        overflow: hidden;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: #fff;
+        transition: height 0.3s ease;
+      }
+      .slides {
+        display: flex;
+        will-change: transform;
+        transition: transform 0.5s ease-in-out;
+        touch-action: pan-y;
+      }
+      .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        background: #fff;
+      }
+      .slide .media {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--light-color);
+        overflow: hidden;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        position: relative;
+      }
+      .slide img {
+        max-width: 100%;
+        height: auto;
+        width: auto;
+        max-height: 90vh;
+        object-fit: contain;
+        display: block;
+        border-radius: 6px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .slide img.loaded {
+        opacity: 1;
+      }
+      .slide .media::before {
+        content: "Image preview";
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #f0f0f0;
+        color: #999;
+        font-style: italic;
+      }
+      .slide .media.has-image::before {
+        content: none;
+      }
+      .dots {
+        text-align: center;
+        margin-top: 1rem;
+      }
+      .dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin: 0 5px;
+        background: #cfd8e3;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.12s ease;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+      .dot:hover {
+        transform: translateY(-1px);
+      }
+      .dot.active {
+        background: var(--accent-color);
+      }
+      .carousel-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+      .carousel-nav button {
+        pointer-events: auto;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        color: var(--primary-color);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+      .carousel-nav button:hover {
+        background: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background: var(--primary-color);
+        color: #fff;
+        margin-top: 2rem;
+      }
+
+      /* Accessibility */
+      button:focus-visible,
+      a:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 768px) {
+        .carousel-container {
+          max-width: 100%;
+        }
+        .carousel-nav button {
+          width: 36px;
+          height: 36px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .slides {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header role="banner">
+      <h1>Rama Mhalla</h1>
+      <p>
+        MSc Student in Telecommunication Engineering | AI, IoT, 5G, Cloud & Edge
+        Computing
+      </p>
+    </header>
+
+    <main id="main" role="main">
+      <section id="intro" aria-labelledby="title">
+        <h2 id="title">Smart Museum Emotion Recognition</h2>
+
+        <article class="project" aria-label="Project overview">
+          <p>
+            A step toward emotionally intelligent cultural spaces: this system
+            uses a <strong>USB 2K camera</strong> and a
+            <strong>Raspberry Pi 5</strong> to recognize visitor emotions in
+            real time (<em
+              >Happy, Surprise, Neutral, Angry, Disgust, Fear, Sad</em
+            >), built with a <strong>CNN model</strong> trained on
+            <strong>FER2013</strong>, converted to
+            <strong>TensorFlow Lite</strong> for edge inference. Data is routed
+            via <strong>Node-RED</strong> to a central
+            <strong>Laravel</strong> dashboard for analytics and reporting.
+          </p>
+
+          <div class="highlight">
+            <div class="kv">
+              <div class="key">Objective</div>
+              <div>
+                Real-time visitor emotion insights to inform curation and
+                engagement
+              </div>
+
+              <div class="key">Edge Device</div>
+              <div>
+                Raspberry Pi 5 (Cortex-A76 @ 2.4GHz, 8GB RAM, Wi-Fi/BT/GbE)
+              </div>
+
+              <div class="key">Model</div>
+              <div>CNN (TensorFlow 2.x → TFLite, optional quantization)</div>
+
+              <div class="key">Pipeline</div>
+              <div>
+                Capture → face detection → preprocess → inference → POST to
+                Node-RED → Laravel
+              </div>
+            </div>
+          </div>
+
+          <p>
+            <a class="btn primary" href="#" aria-disabled="true"
+              >Live Demo (soon)</a
+            >
+            <a
+              class="btn ghost"
+              target="_blank"
+              href="https://github.com/RamaMhallla/museum-emotion-ai-platform"
+              aria-disabled="true"
+              >Source Code</a
+            >
+          </p>
+        </article>
+      </section>
+
+      <section id="tools" aria-labelledby="tools-title">
+        <h2 id="tools-title">Tools & Technologies</h2>
+
+        <div class="grid two">
+          <article class="project" aria-label="USB Camera">
+            <h3>USB Camera (2K Quad HD)</h3>
+            <p>
+              Primary sensor for real-time face capture; higher resolution
+              improves detection quality.
+            </p>
+            <span class="badge">UVC</span><span class="badge">30 FPS</span
+            ><span class="badge">2K</span>
+            <img
+              src="img/2K Quad HD Web Camera.png"
+              alt="CNN high-level pipeline"
+              loading="lazy"
+              decoding="async"
+              onload="this.classList.add('loaded')"
+              style="
+                max-width: 100%;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+                margin: 0.5rem 0 1rem;
+              "
+            />
+          </article>
+
+          <article class="project" aria-label="Raspberry Pi 5">
+            <h3>Raspberry Pi 5</h3>
+            <p>
+              Edge compute for low-latency inference. GPU (VideoCore VII)
+              reserved for graphics; CPU handles CNN/TFLite.
+            </p>
+            <ul class="tech-tags" aria-label="Pi specs">
+              <li>Arm Cortex-A76 (Quad, 2.4GHz)</li>
+              <li>8GB RAM</li>
+              <li>Raspberry Pi OS</li>
+              <li>Wi-Fi / BT 5.0 BLE / GbE</li>
+              <li>microSD</li>
+              <li>40-pin GPIO</li>
+            </ul>
+            <img
+              src="img/raspberrypi.png"
+              alt="CNN high-level pipeline"
+              loading="lazy"
+              decoding="async"
+              onload="this.classList.add('loaded')"
+              style="
+                max-width: 100%;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+                margin: 0.5rem 0 1rem;
+              "
+            />
+          </article>
+        </div>
+
+        <div class="grid two">
+          <article class="project" aria-label="Node-RED">
+            <h3>Node-RED</h3>
+            <p>
+              Flow-based tool to receive HTTP POSTs from the Pi, process
+              payloads, and forward to the main dashboard.
+            </p>
+            <span class="badge">HTTP In</span><span class="badge">Function</span
+            ><span class="badge">HTTP Request</span
+            ><span class="badge">Debug</span>
+            <img
+              src="img/Node-RED logo.png"
+              alt="CNN high-level pipeline"
+              loading="lazy"
+              decoding="async"
+              onload="this.classList.add('loaded')"
+              style="
+                max-width: 100%;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+                margin: 0.5rem 0 1rem;
+              "
+            />
+          </article>
+
+          <article class="project" aria-label="Laravel Dashboard">
+            <h3>Laravel + Chart.js</h3>
+            <p>
+              Central dashboard to validate, store (MySQL), visualize trends,
+              and export reports.
+            </p>
+            <span class="badge">REST API</span><span class="badge">Blade</span
+            ><span class="badge">Charts</span
+            ><span class="badge">Export (CSV/XLSX)</span>
+          </article>
+        </div>
+      </section>
+
+      <section id="dataset" aria-labelledby="data-title">
+        <h2 id="data-title">Dataset: FER2013</h2>
+        <article class="project">
+          <p>
+            <strong>FER2013</strong> includes ~36k grayscale face images
+            (<strong>48×48</strong>) captured "in-the-wild". Labels: Angry,
+            Disgust, Fear, Happy, Sad, Surprise, Neutral.
+          </p>
+          <div class="grid two">
+            <div class="highlight">
+              <h3>Why FER2013?</h3>
+              <ul>
+                <li>Compact (48×48) → fast training/inference</li>
+                <li>
+                  Diverse, real-world variations (pose, lighting, occlusions)
+                </li>
+                <li>Standard benchmark for facial expression recognition</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Preprocessing</h3>
+              <ul>
+                <li>Grayscale normalization</li>
+                <li>Face detection & aligned crops</li>
+                <li>Data augmentation (minor rotations/shifts/flips)</li>
+              </ul>
+            </div>
+          </div>
+          <p>
+            <span class="badge">48×48</span>
+            <span class="badge">~36,000 images</span>
+            <span class="badge">7 classes</span>
+            <span class="badge">In-the-wild</span>
+          </p>
+        </article>
+      </section>
+
+      <section id="cnn" aria-labelledby="cnn-title">
+        <h2 id="cnn-title">CNN Model: Design & Training</h2>
+        <article class="project">
+          <h3>Architecture Overview</h3>
+          <p>
+            Stacked <strong>Conv + ReLU + MaxPool</strong> blocks extract
+            hierarchical features, then <strong>Dense</strong> layers map to
+            7-class <strong>softmax</strong>.
+          </p>
+
+          <div class="grid two">
+            <div>
+              <h3>Training Setup</h3>
+              <ul>
+                <li>TensorFlow 2.x (e.g., 2.19)</li>
+                <li>
+                  Batch size: <strong>32</strong>, Epochs:
+                  <strong>100</strong> (with callbacks)
+                </li>
+                <li>
+                  Callbacks: EarlyStopping (patience=15), ReduceLROnPlateau
+                  (patience=5)
+                </li>
+                <li>
+                  Generator-based augmentation (rotation, shift, shear, zoom,
+                  flip)
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3>Monitoring</h3>
+              <ul>
+                <li>Track training/validation accuracy & loss</li>
+                <li>
+                  Persist best model:
+                  <code>emotion_detection_model_improved.h5</code>
+                </li>
+                <li>Evaluate on hold-out test set</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <img
+          src="img/CNN.png"
+          alt="CNN high-level pipeline"
+          loading="lazy"
+          decoding="async"
+          onload="this.classList.add('loaded')"
+          style="
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            margin: 0.5rem 0 1rem;
+          "
+        />
+        <img
+          src="img/CNN MODEL.png"
+          alt="CNN detailed block diagram"
+          loading="lazy"
+          decoding="async"
+          onload="this.classList.add('loaded')"
+          style="
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+          "
+        />
+      </section>
+
+      <section id="tflite" aria-labelledby="tflite-title">
+        <h2 id="tflite-title">TensorFlow Lite: Edge Deployment</h2>
+        <article class="project">
+          <p>
+            Convert the trained Keras model to <strong>.tflite</strong> for
+            on-device inference on the Raspberry Pi. Benefits: reduced latency,
+            privacy (no image upload), smaller footprint, offline operation.
+          </p>
+          <div class="grid two">
+            <div class="highlight">
+              <h3>Conversion Steps</h3>
+              <ol>
+                <li>Load the trained <code>.h5</code> model</li>
+                <li>Initialize TFLite Converter</li>
+                <li>
+                  Apply optimizations (dynamic range or int8 quantization)
+                </li>
+                <li>Convert and save as <code>emotion_model.tflite</code></li>
+              </ol>
+            </div>
+            <div>
+              <h3>Latency & Footprint</h3>
+              <ul>
+                <li>48×48 inputs keep CPU-only inference responsive on Pi 5</li>
+                <li>
+                  INT8 quantization reduces model size & speeds up inference
+                </li>
+                <li>Optional temporal smoothing reduces label flicker</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="runtime" aria-labelledby="runtime-title">
+        <h2 id="runtime-title">Runtime Setup & Processing Pipeline</h2>
+        <article class="project">
+          <h3>Realtime Loop (high level)</h3>
+          <ol>
+            <li>Load TFLite model + face detector</li>
+            <li>Open camera stream (USB)</li>
+            <li>Detect faces → crop → resize to 48×48 grayscale → normalize</li>
+            <li>
+              Run inference → get probabilities → pick top emotion + confidence
+            </li>
+            <li>Optional overlay on preview window</li>
+            <li>
+              POST JSON (<em>emotion, confidence, timestamp, artwork_id</em>) to
+              Node-RED
+            </li>
+          </ol>
+
+          <div
+            class="highlight"
+            role="region"
+            aria-label="POST payload example"
+          >
+            <pre style="margin: 0; white-space: pre-wrap">
+{
+  "emotion": "Happy",
+  "confidence": 0.92,
+  "timestamp": "2025-09-10T14:32:12Z",
+  "artwork_id": "roomA_frame_12"
+}</pre
+            >
+          </div>
+
+          <p class="callout">
+            <strong>Privacy:</strong> Only emotion metadata is sent; raw images
+            stay on-device.
+          </p>
+        </article>
+      </section>
+
+      <section id="nodered" aria-labelledby="nr-title">
+        <h2 id="nr-title">Node-RED Flow</h2>
+        <article class="project">
+          <h3>Flow Blocks</h3>
+          <ul>
+            <li><strong>HTTP In</strong>: receives POST from Raspberry Pi</li>
+            <li>
+              <strong>Function</strong>: parse/validate/transform
+              <code>msg.payload</code>
+            </li>
+            <li>
+              <strong>HTTP Request</strong>: forward to Laravel endpoint
+              <code>/api/receive-data</code>
+            </li>
+            <li><strong>Debug</strong>: inspect payloads during development</li>
+          </ul>
+          <p>
+            Endpoint example on the Pi:
+            <code>http://&lt;NODE_RED_IP:PORT&gt;/emotion</code> → Function node
+            → POST
+            <code>http://&lt;DASHBOARD_IP:PORT&gt;/api/receive-data</code>
+          </p>
+        </article>
+      </section>
+
+      <section id="laravel" aria-labelledby="laravel-title">
+        <h2 id="laravel-title">Laravel Dashboard</h2>
+        <article class="project">
+          <h3>Backend</h3>
+          <ul>
+            <li>Route <code>POST /api/receive-data</code> with validation</li>
+            <li>
+              Store to <code>emotions</code> table (emotion, confidence,
+              artwork_id, timestamp, source_id)
+            </li>
+            <li>REST endpoints for charts & exports (CSV/XLSX)</li>
+          </ul>
+
+          <h3>Frontend (Blade + Chart.js)</h3>
+          <ul>
+            <li>Realtime stream of latest events</li>
+            <li>Trend charts by time / gallery room / artwork</li>
+            <li>Filters (date range, emotion class, source)</li>
+            <li>
+              Reports export (username, artwork name, emotion, timestamp, wait
+              time)
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="results" aria-labelledby="results-title">
+        <h2 id="results-title">Results & Observations</h2>
+        <article class="project">
+          <div class="grid two">
+            <div class="highlight">
+              <h3>What worked well</h3>
+              <ul>
+                <li>Stable real-time inference on Pi 5 with TFLite</li>
+                <li>Low latency end-to-end (camera → dashboard)</li>
+                <li>Clear trends for engaging artworks</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Challenges</h3>
+              <ul>
+                <li>"In-the-wild" variability (occlusions, lighting, pose)</li>
+                <li>GPU acceleration not directly leveraged by TFLite on Pi</li>
+                <li>Class imbalance (e.g., few Disgust samples)</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="future" aria-labelledby="future-title">
+        <h2 id="future-title">Future Work</h2>
+        <article class="project">
+          <ul class="features-list">
+            <li>Stronger backbones (MobileNetV3, EfficientNet-Lite)</li>
+            <li>Quantization-aware training / full-int8 pipelines</li>
+            <li>
+              Temporal smoothing (windowed majority / HMM) to reduce flicker
+            </li>
+            <li>
+              Multimodal signals (dwell time, gaze proxies, voluntary feedback)
+            </li>
+            <li>Fairness auditing across demographics; bias mitigation</li>
+            <li>
+              Privacy by design: on-device only, ephemeral frames, consent
+              banners
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- GALLERY 1: LARAVEL DASHBOARD -->
+      <section
+        id="gallery_laravel_dashboard"
+        aria-labelledby="gallery-title-laravel"
+      >
+        <h2 id="gallery-title-laravel">Gallery — Laravel Dashboard</h2>
+
+        <div
+          class="carousel-container"
+          aria-roledescription="carousel"
+          aria-label="Laravel gallery"
+        >
+          <div class="carousel">
+            <div class="slides" aria-live="polite">
+              <div class="slide">
+                <div class="media">
+                  <img
+                    src="img/dashboard_iot_larvel.png"
+                    alt="Laravel dashboard overview with charts and KPIs"
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
+                  />
+                </div>
+              </div>
+              <div class="slide">
+                <div class="media">
+                  <img
+                    src="img/home_iot.png"
+                    alt="Home page of the IoT dashboard"
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-nav" aria-hidden="false">
+            <button type="button" aria-label="Previous slide">❮</button>
+            <button type="button" aria-label="Next slide">❯</button>
+          </div>
+
+          <div class="dots" aria-hidden="false"></div>
+        </div>
+
+        <h3>Technologies Used</h3>
+        <ul class="tech-tags" aria-label="Technologies">
+          <li>Raspberry Pi 5</li>
+          <li>Python</li>
+          <li>OpenCV</li>
+          <li>TensorFlow / TFLite</li>
+          <li>Node-RED</li>
+          <li>Laravel + MySQL</li>
+          <li>Chart.js</li>
+        </ul>
+      </section>
+
+      <!-- GALLERY 2: FLUTTER APP -->
+      <section id="gallery_flutter_app" aria-labelledby="gallery-title-flutter">
+        <h2 id="gallery-title-flutter">Gallery — Flutter App</h2>
+
+        <div
+          class="carousel-container"
+          aria-roledescription="carousel"
+          aria-label="Flutter gallery"
+        >
+          <div class="carousel">
+            <div class="slides" aria-live="polite">
+              <div class="slide">
+                <div class="media">
+                  <img
+                    src="img/iPhone 16 - 2.png"
+                    alt="Flutter app — screen 1"
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
+                  />
+                </div>
+              </div>
+              <div class="slide">
+                <div class="media">
+                  <img
+                    src="img/iPhone 16 - 3.png"
+                    alt="Flutter app — screen 2"
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
+                  />
+                </div>
+              </div>
+              <div class="slide">
+                <div class="media">
+                  <img
+                    src="img/iPhone 16 - 4.png"
+                    alt="Flutter app — screen 3"
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
+                  />
+                </div>
+              </div>
+              <div class="slide">
+                <div class="media">
+                  <img
+                    src="img/iPhone 16 - 5.png"
+                    alt="Flutter app — screen 4"
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
+                  />
+                </div>
+              </div>
+              <div class="slide">
+                <div class="media">
+                  <img
+                    src="img/iPhone 16 - 19.png"
+                    alt="Flutter app — screen 5"
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
+                  />
+                </div>
+              </div>
+              <div class="slide">
+                <div class="media">
+                  <img
+                    src="img/iPhone 16 - 20.png"
+                    alt="Flutter app — screen 6"
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
+                  />
+                </div>
+              </div>
+              <div class="slide">
+                <div class="media">
+                  <img
+                    src="img/iPhone 16 - 21.png"
+                    alt="Flutter app — screen 7"
+                    loading="lazy"
+                    decoding="async"
+                    onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="carousel-nav" aria-hidden="false">
+            <button type="button" aria-label="Previous slide">❮</button>
+            <button type="button" aria-label="Next slide">❯</button>
+          </div>
+
+          <div class="dots" aria-hidden="false"></div>
+        </div>
+
+        <h3>Technologies Used</h3>
+        <ul class="tech-tags" aria-label="Technologies">
+          <li>Raspberry Pi 5</li>
+          <li>Python</li>
+          <li>OpenCV</li>
+          <li>TensorFlow / TFLite</li>
+          <li>Node-RED</li>
+          <li>Laravel + MySQL</li>
+          <li>Chart.js</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer role="contentinfo">
+      <p>&copy; 2025 Rama Mhalla | All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Multi-instance accessible carousel (no external deps)
+      (function () {
+        const containers = document.querySelectorAll(".carousel-container");
+        if (!containers.length) return;
+
+        containers.forEach((wrap) => {
+          const track = wrap.querySelector(".slides");
+          const carousel = wrap.querySelector(".carousel");
+          const prevBtn = wrap.querySelector(
+            ".carousel-nav button[aria-label='Previous slide']"
+          );
+          const nextBtn = wrap.querySelector(
+            ".carousel-nav button[aria-label='Next slide']"
+          );
+          const dotsWrap = wrap.querySelector(".dots");
+          if (!track || !carousel || !prevBtn || !nextBtn || !dotsWrap) return;
+
+          const slides = Array.from(track.children);
+          const total = slides.length;
+          let current = 0;
+          let timer;
+          let paused = false;
+
+          // Build dots
+          const dots = slides.map((_, i) => {
+            const dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "dot" + (i === 0 ? " active" : "");
+            dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+            dot.addEventListener("click", () => moveTo(i));
+            dotsWrap.appendChild(dot);
+            return dot;
+          });
+
+          function setActiveDot(index) {
+            dots.forEach((d, i) => d.classList.toggle("active", i === index));
+          }
+
+          function moveTo(index) {
+            current = (index + total) % total;
+            track.style.transform = `translateX(-${current * 100}%)`;
+            setActiveDot(current);
+            setHeight();
+            restart();
+          }
+
+          function next() {
+            moveTo(current + 1);
+          }
+          function prev() {
+            moveTo(current - 1);
+          }
+
+          function setHeight() {
+            const media = slides[current]?.querySelector(".media");
+            if (!media) return;
+            requestAnimationFrame(() => {
+              carousel.style.height = media.scrollHeight + "px";
+            });
+          }
+
+          nextBtn.addEventListener("click", next, { passive: true });
+          prevBtn.addEventListener("click", prev, { passive: true });
+
+          // Keyboard (scoped to container)
+          wrap.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowRight") next();
+            if (e.key === "ArrowLeft") prev();
+          });
+
+          // Pointer swipe
+          let startX = 0,
+            nowX = 0,
+            dragging = false;
+          track.addEventListener("pointerdown", (e) => {
+            dragging = true;
+            startX = nowX = e.clientX;
+            track.style.transition = "none";
+          });
+          track.addEventListener("pointermove", (e) => {
+            if (!dragging) return;
+            nowX = e.clientX;
+            const dx = nowX - startX;
+            track.style.transform = `translateX(calc(-${
+              current * 100
+            }% + ${dx}px))`;
+          });
+          function endDrag() {
+            if (!dragging) return;
+            track.style.transition = "";
+            const dx = nowX - startX;
+            if (Math.abs(dx) > 60) {
+              dx < 0 ? next() : prev();
+            } else {
+              moveTo(current);
+            }
+            dragging = false;
+          }
+          track.addEventListener("pointerup", endDrag);
+          track.addEventListener("pointercancel", endDrag);
+          track.addEventListener("pointerleave", endDrag);
+
+          const pause = () => {
+            paused = true;
+            clearInterval(timer);
+          };
+          const play = () => {
+            paused = false;
+            restart();
+          };
+          wrap.addEventListener("mouseenter", pause);
+          wrap.addEventListener("mouseleave", play);
+          wrap.addEventListener("focusin", pause);
+          wrap.addEventListener("focusout", play);
+
+          function restart() {
+            clearInterval(timer);
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+              return;
+            if (!paused) timer = setInterval(next, 5000);
+          }
+
+          // Ensure height correct once images are loaded
+          const imgs = track.querySelectorAll("img");
+          let pending = imgs.length;
+          if (pending === 0) setHeight();
+          imgs.forEach((img) => {
+            const markLoaded = () => {
+              img.classList.add("loaded");
+              img.closest(".media")?.classList.add("has-image");
+              if (--pending === 0) setHeight();
+            };
+            if (img.complete) markLoaded();
+            else img.addEventListener("load", markLoaded, { once: true });
+          });
+
+          moveTo(0);
+        });
+      })();
+    </script>
+  </body>
+</html>
