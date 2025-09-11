@@ -12,6 +12,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1B1pN6Gp6cQpLNk31DJ7jIuQddnU0w9Yy2K8vb3GZmg7uUuHk5n0+qNp5T9e+8wCcw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
@@ -372,6 +380,150 @@
           transition: none;
         }
       }
+      /* Author section */
+      .author-section .project {
+        padding-top: 1rem;
+      }
+
+      .author-section .author-row {
+        display: grid;
+        grid-template-columns: 1fr auto; /* معلومات يسار – أيقونات يمين */
+        gap: 0.75rem 1rem;
+        align-items: center;
+        padding: 0.8rem 0.2rem;
+        border-bottom: 1px dashed rgba(58, 90, 122, 0.12);
+      }
+      .author-section .author-row:last-of-type {
+        border-bottom: 0;
+      }
+
+      .author-section .author-meta {
+        min-width: 0;
+      }
+
+      .author-section .author-name {
+        margin: 0;
+        font-size: clamp(1rem, 0.35vw + 1rem, 1.08rem);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .author-section .author-desc {
+        margin: 0.2rem 0 0;
+        font-size: 0.95rem;
+        color: var(--text-color);
+        opacity: 0.95;
+      }
+
+      .author-section .badge {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        color: #072233;
+        background: #e7f6ff;
+        border: 1px solid rgba(79, 195, 247, 0.35);
+      }
+      .author-section .badge.alt {
+        background: #f4f5ff;
+        color: var(--secondary-color);
+        border-color: rgba(58, 90, 122, 0.25);
+      }
+
+      /* Links (right side) */
+      .author-section .links {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .author-section .link {
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        display: inline-grid;
+        place-items: center;
+        background: #eef2f7;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        text-decoration: none;
+        transition: background-color 0.2s ease, transform 0.12s ease,
+          border-color 0.2s ease;
+      }
+      .author-section .link:hover {
+        background: #fff;
+        transform: translateY(-1px);
+        border-color: rgba(79, 195, 247, 0.45);
+      }
+      .author-section .link:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
+      }
+
+      /* SVG icon color: muted -> accent on hover */
+      .author-section .link svg {
+        width: 18px;
+        height: 18px;
+        color: #adb5bd; /* muted gray */
+        transition: color 0.25s ease;
+      }
+      .author-section .link:hover svg {
+        color: var(--accent-color);
+      }
+
+      .author-section .affiliation {
+        margin: 0.9rem 0 0;
+        padding: 0.6rem 1rem;
+        border-radius: calc(var(--radius) - 2px);
+        background: linear-gradient(180deg, #f7fbff, #f1f8ff);
+        border: 1px solid rgba(79, 195, 247, 0.25);
+        text-align: center;
+        font-weight: 500;
+        color: var(--primary-color);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem; /* مسافة بين الشعار والنص */
+        justify-content: center;
+      }
+
+      .author-section .affiliation .uni-logo {
+        width: 50px; /* حجم أصغر للشعار */
+        height: auto;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      /* Responsive */
+      @media (max-width: 640px) {
+        .author-section .author-row {
+          grid-template-columns: 1fr; /* الأيقونات تنزل تحت على الموبايل */
+        }
+        .author-section .links {
+          justify-content: flex-start;
+        }
+      }
+      .author-section .affiliation {
+        margin: 0.9rem 0 0;
+        padding: 0.9rem 1rem;
+        border-radius: calc(var(--radius) - 2px);
+        background: linear-gradient(180deg, #f7fbff, #f1f8ff);
+        border: 1px solid rgba(79, 195, 247, 0.25);
+        text-align: center;
+        font-weight: 500;
+        color: var(--primary-color);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem; /* مسافة بين الشعار والنص */
+        justify-content: center;
+        width: 100%;
+      }
+
+      .author-section .affiliation .uni-logo {
+        width: 30x; /* حجم الشعار */
+        height: auto;
+        display: inline-block;
+      }
     </style>
   </head>
   <body>
@@ -586,6 +738,147 @@
         </article>
       </section>
     </main>
+
+    <!-- Author Section -->
+    <section class="author-section" aria-labelledby="author-title">
+      <h2 id="author-title">Author</h2>
+      <div class="project">
+        <!-- Rama -->
+        <div class="author-row">
+          <div class="author-meta">
+            <p class="author-name">
+              <strong> Rama Mhalla </strong>
+              <span class="badge">Master's Student</span>
+            </p>
+          </div>
+
+          <div class="links" aria-label="Rama links">
+            <!-- Portfolio -->
+            <a
+              class="link"
+              href="https://ramamhalla.github.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Rama Portfolio"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                />
+                <path
+                  d="M3 12h18M12 3c2.5 2.5 3.75 5.5 3.75 9S14.5 18.5 12 21m0-18C9.5 5.5 8.25 8.5 8.25 12S9.5 18.5 12 21"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </a>
+            <!-- LinkedIn -->
+            <a
+              class="link"
+              href="https://www.linkedin.com/in/rama-mhalla"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Rama LinkedIn"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M6.94 8.5v9.56M6.94 5.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M10.94 18.06v-5.16a2.4 2.4 0 0 1 4.8 0v5.16"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </a>
+            <!-- GitHub -->
+            <a
+              class="link"
+              href="https://github.com/ramamhalla"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Rama GitHub"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 2C6.48 2 2 6.58 2 12.22c0 4.52 2.87 8.35 6.85 9.7.5.1.68-.22.68-.48 0-.24-.01-.88-.01-1.73-2.79.62-3.38-1.37-3.38-1.37-.46-1.2-1.12-1.52-1.12-1.52-.92-.64.07-.63.07-.63 1.02.07 1.56 1.08 1.56 1.08.9 1.58 2.37 1.12 2.95.86.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.74-.1-.26-.45-1.32.1-2.75 0 0 .85-.28 2.78 1.05.81-.23 1.67-.35 2.53-.35s1.72.12 2.53.35c1.92-1.33 2.77-1.05 2.77-1.05.56 1.43.21 2.49.1 2.75.64.71 1.03 1.62 1.03 2.74 0 3.93-2.33 4.79-4.56 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .26.18.58.69.48A10.03 10.03 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"
+                  stroke="currentColor"
+                  stroke-width="1"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Vincenzo -->
+        <div class="author-row">
+          <div class="author-meta">
+            <p class="author-name">
+              <strong> Vincenzo Damico </strong>
+              <span class="badge alt">Master's Student</span>
+            </p>
+          </div>
+
+          <div class="links" aria-label="Vincenzo links">
+            <!-- LinkedIn -->
+            <a
+              class="link"
+              href="https://www.linkedin.com/in/vincenzo-damico"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Vincenzo LinkedIn"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M6.94 8.5v9.56M6.94 5.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M10.94 18.06v-5.16a2.4 2.4 0 0 1 4.8 0v5.16"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </a>
+            <!-- GitHub -->
+            <a
+              class="link"
+              href="https://github.com/ramamhalla"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Rama GitHub"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 2C6.48 2 2 6.58 2 12.22c0 4.52 2.87 8.35 6.85 9.7.5.1.68-.22.68-.48 0-.24-.01-.88-.01-1.73-2.79.62-3.38-1.37-3.38-1.37-.46-1.2-1.12-1.52-1.12-1.52-.92-.64.07-.63.07-.63 1.02.07 1.56 1.08 1.56 1.08.9 1.58 2.37 1.12 2.95.86.09-.67.35-1.12.63-1.38-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.74-.1-.26-.45-1.32.1-2.75 0 0 .85-.28 2.78 1.05.81-.23 1.67-.35 2.53-.35s1.72.12 2.53.35c1.92-1.33 2.77-1.05 2.77-1.05.56 1.43.21 2.49.1 2.75.64.71 1.03 1.62 1.03 2.74 0 3.93-2.33 4.79-4.56 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .26.18.58.69.48A10.03 10.03 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"
+                  stroke="currentColor"
+                  stroke-width="1"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <p class="affiliation">
+          <img
+            src="img/unical.png"
+            alt="University of Calabria Logo"
+            class="uni-logo"
+          />
+          MSc in Telecommunication Engineering – University of Calabria
+        </p>
+      </div>
+    </section>
 
     <footer role="contentinfo">
       <p>&copy; 2025 Rama Mhalla | All rights reserved.</p>

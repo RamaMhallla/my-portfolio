@@ -7,6 +7,10 @@
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
     <title>Rama Mhalla | Smart Museum Emotion Recognition</title>
+    <meta
+      name="description"
+      content="Smart Museum Emotion Recognition on Raspberry Pi 5 with TFLite, Node-RED integration, and a Laravel analytics dashboard."
+    />
 
     <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,14 +26,31 @@
         --secondary-color: #3a5a7a;
         --accent-color: #4fc3f7;
         --light-color: #f8f9fa;
-        --dark-color: #212529;
+        --dark-color: #0e1726;
         --text-color: #495057;
 
         --radius: 12px;
         --shadow: 0 8px 24px rgba(19, 31, 53, 0.08);
         --p-size: clamp(1.02rem, 0.35vw + 1rem, 1.14rem);
         --p-line: 1.75;
+
+        --maxw: 1000px;
       }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --light-color: #0b1220;
+          --text-color: #d5d9e2;
+          --primary-color: #93b4ff;
+          --secondary-color: #8fb3d6;
+          --accent-color: #6bd2ff;
+          --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+        img {
+          filter: saturate(1.05);
+        }
+      }
+
       * {
         box-sizing: border-box;
       }
@@ -46,6 +67,7 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
+
       p {
         font-size: var(--p-size);
         line-height: var(--p-line);
@@ -77,7 +99,7 @@
           var(--secondary-color)
         );
         color: #fff;
-        padding: 4rem 2rem;
+        padding: 4rem 2rem 5.5rem;
         text-align: center;
         position: relative;
         overflow: hidden;
@@ -95,21 +117,50 @@
         margin: 0.5rem auto 0;
       }
 
+      /* Sticky TOC */
+      .toc-wrap {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(10px);
+        background: color-mix(in srgb, var(--light-color) 85%, transparent);
+        border-bottom: 1px solid rgba(58, 90, 122, 0.12);
+      }
       nav.toc {
-        max-width: 1000px;
-        margin: -1rem auto 0;
-        background: #fff;
-        border-radius: var(--radius);
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        max-width: var(--maxw);
+        margin: -2.2rem auto 0;
+        padding: 0.7rem 1rem;
+        border-radius: 999px;
         box-shadow: var(--shadow);
-        padding: 1rem 1.25rem;
+        background: #fff;
         border: 1px solid rgba(58, 90, 122, 0.08);
+      }
+      @media (prefers-color-scheme: dark) {
+        nav.toc {
+          background: #0f1628;
+          border-color: rgba(255, 255, 255, 0.06);
+        }
+      }
+      nav.toc strong {
+        margin-right: 0.25rem;
       }
       nav.toc a {
         color: var(--secondary-color);
         text-decoration: none;
+        padding: 0.3rem 0.6rem;
+        border-radius: 999px;
       }
       nav.toc a:hover {
         text-decoration: underline;
+      }
+      nav.toc a.active {
+        background: #e3f2fd;
+        border: 1px solid rgba(79, 195, 247, 0.25);
       }
 
       main {
@@ -117,8 +168,9 @@
       }
       section {
         padding: 3rem 2rem;
-        max-width: 1000px;
+        max-width: var(--maxw);
         margin: auto;
+        scroll-margin-top: 6rem;
       }
 
       h2 {
@@ -152,6 +204,13 @@
         border: 1px solid rgba(58, 90, 122, 0.08);
         border-left: 4px solid var(--accent-color);
       }
+      @media (prefers-color-scheme: dark) {
+        .project {
+          background: #0f1628;
+          border-color: rgba(255, 255, 255, 0.06);
+        }
+      }
+
       .grid {
         display: grid;
         gap: 1rem;
@@ -171,6 +230,13 @@
         padding: 1rem;
         border-radius: 10px;
       }
+      @media (prefers-color-scheme: dark) {
+        .highlight {
+          background: #0d2030;
+          border-color: rgba(79, 195, 247, 0.25);
+        }
+      }
+
       .kv {
         display: grid;
         grid-template-columns: 170px 1fr;
@@ -181,6 +247,7 @@
         color: var(--secondary-color);
         font-weight: 600;
       }
+
       .badge {
         display: inline-block;
         padding: 0.25rem 0.6rem;
@@ -191,6 +258,7 @@
         font-size: 0.8rem;
         margin: 0.15rem 0.25rem 0 0;
       }
+
       .tech-tags {
         display: flex;
         flex-wrap: wrap;
@@ -211,7 +279,6 @@
         transform: translateY(-1px);
       }
 
-      /* Features list used in Future Work */
       .features-list {
         padding-left: 1.2rem;
       }
@@ -233,6 +300,13 @@
         border-radius: 10px;
         padding: 1rem;
       }
+      @media (prefers-color-scheme: dark) {
+        .callout {
+          background: #2b2106;
+          border-color: #7a5a00;
+          color: #ffe7a3;
+        }
+      }
 
       a.btn {
         display: inline-block;
@@ -251,6 +325,11 @@
         background: #fff;
         color: var(--accent-color);
         border: 1px solid var(--accent-color);
+      }
+      @media (prefers-color-scheme: dark) {
+        a.btn.ghost {
+          background: transparent;
+        }
       }
 
       /* Carousel (multi-instance) */
@@ -375,6 +454,32 @@
         margin-top: 2rem;
       }
 
+      /* Back to top */
+      .back-to-top {
+        position: fixed;
+        right: 16px;
+        bottom: 18px;
+        z-index: 60;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: 0.2s ease;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        background: #fff;
+        color: var(--primary-color);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        box-shadow: var(--shadow);
+      }
+      .back-to-top.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
       /* Accessibility */
       button:focus-visible,
       a:focus-visible {
@@ -396,6 +501,22 @@
           transition: none;
         }
       }
+
+      /* Print: clean PDF */
+      @media print {
+        .toc-wrap,
+        .carousel-nav,
+        .dots,
+        .back-to-top {
+          display: none !important;
+        }
+        header {
+          padding: 2rem 1rem;
+        }
+        section {
+          page-break-inside: avoid;
+        }
+      }
     </style>
   </head>
   <body>
@@ -409,6 +530,25 @@
       </p>
     </header>
 
+    <!-- Sticky TOC -->
+    <div class="toc-wrap">
+      <nav class="toc" aria-label="Table of contents">
+        <strong>On this page:</strong>
+        <a href="#intro">Introduction</a>
+        <a href="#tools">Tools</a>
+        <a href="#dataset">Dataset</a>
+        <a href="#cnn">CNN Model</a>
+        <a href="#tflite">TFLite</a>
+        <a href="#runtime">Runtime & Pipeline</a>
+        <a href="#nodered">Node-RED Flow</a>
+        <a href="#laravel">Laravel Dashboard</a>
+        <a href="#results">Results</a>
+        <a href="#future">Future Work</a>
+        <a href="#gallery_laravel_dashboard">Laravel Gallery</a>
+        <a href="#gallery_flutter_app">Flutter Gallery</a>
+      </nav>
+    </div>
+
     <main id="main" role="main">
       <section id="intro" aria-labelledby="title">
         <h2 id="title">Smart Museum Emotion Recognition</h2>
@@ -416,7 +556,8 @@
         <article class="project" aria-label="Project overview">
           <p>
             A step toward emotionally intelligent cultural spaces: this system
-            uses a <strong>USB 2K camera</strong> and a
+            uses a
+            <strong>USB 2K camera</strong> and a
             <strong>Raspberry Pi 5</strong> to recognize visitor emotions in
             real time (<em
               >Happy, Surprise, Neutral, Angry, Disgust, Fear, Sad</em
@@ -459,7 +600,6 @@
               class="btn ghost"
               target="_blank"
               href="https://github.com/RamaMhallla/museum-emotion-ai-platform"
-              aria-disabled="true"
               >Source Code</a
             >
           </p>
@@ -480,10 +620,10 @@
             ><span class="badge">2K</span>
             <img
               src="img/2K Quad HD Web Camera.png"
-              alt="CNN high-level pipeline"
+              alt="2K Quad HD USB camera"
               loading="lazy"
               decoding="async"
-              onload="this.classList.add('loaded')"
+              onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
               style="
                 max-width: 100%;
                 border-radius: 8px;
@@ -509,10 +649,10 @@
             </ul>
             <img
               src="img/raspberrypi.png"
-              alt="CNN high-level pipeline"
+              alt="Raspberry Pi 5 board"
               loading="lazy"
               decoding="async"
-              onload="this.classList.add('loaded')"
+              onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
               style="
                 max-width: 100%;
                 border-radius: 8px;
@@ -535,10 +675,10 @@
             ><span class="badge">Debug</span>
             <img
               src="img/Node-RED logo.png"
-              alt="CNN high-level pipeline"
+              alt="Node-RED logo"
               loading="lazy"
               decoding="async"
-              onload="this.classList.add('loaded')"
+              onload="this.classList.add('loaded'); this.closest('.media')?.classList.add('has-image');"
               style="
                 max-width: 100%;
                 border-radius: 8px;
@@ -884,17 +1024,6 @@
 
           <div class="dots" aria-hidden="false"></div>
         </div>
-
-        <h3>Technologies Used</h3>
-        <ul class="tech-tags" aria-label="Technologies">
-          <li>Raspberry Pi 5</li>
-          <li>Python</li>
-          <li>OpenCV</li>
-          <li>TensorFlow / TFLite</li>
-          <li>Node-RED</li>
-          <li>Laravel + MySQL</li>
-          <li>Chart.js</li>
-        </ul>
       </section>
 
       <!-- GALLERY 2: FLUTTER APP -->
@@ -1013,31 +1142,40 @@
       <p>&copy; 2025 Rama Mhalla | All rights reserved.</p>
     </footer>
 
-    <script>
-      // Multi-instance accessible carousel (no external deps)
-      (function () {
-        const containers = document.querySelectorAll(".carousel-container");
-        if (!containers.length) return;
+    <button class="back-to-top" aria-label="Back to top" title="Back to top">
+      ↑
+    </button>
 
+    <script>
+      // Multi-instance carousel + offscreen pause + sticky TOC active link + back-to-top
+      (function () {
+        const $ = (sel, root = document) => root.querySelector(sel);
+        const $$ = (sel, root = document) =>
+          Array.from(root.querySelectorAll(sel));
+
+        // ----- Carousel -----
+        const containers = $$(".carousel-container");
         containers.forEach((wrap) => {
-          const track = wrap.querySelector(".slides");
-          const carousel = wrap.querySelector(".carousel");
-          const prevBtn = wrap.querySelector(
-            ".carousel-nav button[aria-label='Previous slide']"
+          const track = $(".slides", wrap);
+          const carousel = $(".carousel", wrap);
+          const prevBtn = $(
+            ".carousel-nav button[aria-label='Previous slide']",
+            wrap
           );
-          const nextBtn = wrap.querySelector(
-            ".carousel-nav button[aria-label='Next slide']"
+          const nextBtn = $(
+            ".carousel-nav button[aria-label='Next slide']",
+            wrap
           );
-          const dotsWrap = wrap.querySelector(".dots");
+          const dotsWrap = $(".dots", wrap);
           if (!track || !carousel || !prevBtn || !nextBtn || !dotsWrap) return;
 
-          const slides = Array.from(track.children);
+          const slides = $$(".slide", track);
           const total = slides.length;
-          let current = 0;
-          let timer;
-          let paused = false;
+          let current = 0,
+            timer,
+            paused = false;
 
-          // Build dots
+          // dots
           const dots = slides.map((_, i) => {
             const dot = document.createElement("button");
             dot.type = "button";
@@ -1048,25 +1186,9 @@
             return dot;
           });
 
-          function setActiveDot(index) {
-            dots.forEach((d, i) => d.classList.toggle("active", i === index));
+          function setActiveDot(i) {
+            dots.forEach((d, idx) => d.classList.toggle("active", idx === i));
           }
-
-          function moveTo(index) {
-            current = (index + total) % total;
-            track.style.transform = `translateX(-${current * 100}%)`;
-            setActiveDot(current);
-            setHeight();
-            restart();
-          }
-
-          function next() {
-            moveTo(current + 1);
-          }
-          function prev() {
-            moveTo(current - 1);
-          }
-
           function setHeight() {
             const media = slides[current]?.querySelector(".media");
             if (!media) return;
@@ -1074,17 +1196,30 @@
               carousel.style.height = media.scrollHeight + "px";
             });
           }
+          function moveTo(i) {
+            current = (i + total) % total;
+            track.style.transform = `translateX(-${current * 100}%)`;
+            setActiveDot(current);
+            setHeight();
+            restart();
+          }
+          function next() {
+            moveTo(current + 1);
+          }
+          function prev() {
+            moveTo(current - 1);
+          }
 
           nextBtn.addEventListener("click", next, { passive: true });
           prevBtn.addEventListener("click", prev, { passive: true });
 
-          // Keyboard (scoped to container)
+          // Keyboard (scoped)
           wrap.addEventListener("keydown", (e) => {
             if (e.key === "ArrowRight") next();
             if (e.key === "ArrowLeft") prev();
           });
 
-          // Pointer swipe
+          // Swipe
           let startX = 0,
             nowX = 0,
             dragging = false;
@@ -1116,6 +1251,15 @@
           track.addEventListener("pointercancel", endDrag);
           track.addEventListener("pointerleave", endDrag);
 
+          // Autoplay with reduced-motion respect
+          function restart() {
+            clearInterval(timer);
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+              return;
+            if (!paused) timer = setInterval(next, 5000);
+          }
+
+          // Pause on hover/focus
           const pause = () => {
             paused = true;
             clearInterval(timer);
@@ -1129,17 +1273,22 @@
           wrap.addEventListener("focusin", pause);
           wrap.addEventListener("focusout", play);
 
-          function restart() {
-            clearInterval(timer);
-            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
-              return;
-            if (!paused) timer = setInterval(next, 5000);
-          }
+          // Pause when offscreen
+          const io = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((en) => {
+                if (en.isIntersecting) play();
+                else pause();
+              });
+            },
+            { threshold: 0.2 }
+          );
+          io.observe(wrap);
 
-          // Ensure height correct once images are loaded
+          // Set height after images load
           const imgs = track.querySelectorAll("img");
           let pending = imgs.length;
-          if (pending === 0) setHeight();
+          if (!pending) setHeight();
           imgs.forEach((img) => {
             const markLoaded = () => {
               img.classList.add("loaded");
@@ -1152,6 +1301,38 @@
 
           moveTo(0);
         });
+
+        // ----- Active link in TOC -----
+        const tocLinks = $$(".toc a");
+        const sections = tocLinks.map((a) => $(a.getAttribute("href")));
+        const spy = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((en) => {
+              const id = "#" + en.target.id;
+              const link = tocLinks.find((a) => a.getAttribute("href") === id);
+              if (en.isIntersecting) {
+                tocLinks.forEach((a) => a.classList.remove("active"));
+                link?.classList.add("active");
+              }
+            });
+          },
+          { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+        );
+        sections.forEach((s) => s && spy.observe(s));
+
+        // ----- Back to top -----
+        const back = $(".back-to-top");
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (window.scrollY > 500) back.classList.add("show");
+            else back.classList.remove("show");
+          },
+          { passive: true }
+        );
+        back.addEventListener("click", () =>
+          window.scrollTo({ top: 0, behavior: "smooth" })
+        );
       })();
     </script>
   </body>
