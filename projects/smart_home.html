@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Integrated Smart Home Platform | Rama Mhalla</title>
+    <meta name="description" content="Integrated smart home platform combining Zigbee, LoRaWAN, BLE and MQTT through a Raspberry Pi edge gateway with Bi-LSTM energy prediction." />
+
+    <!-- Typography (same as theme) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1B1pN6Gp6cQpLNk31DJ7jIuQddnU0w9Yy2K8vb3GZmg7uUuHk5n0+qNp5T9e+8wCcw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2b3d5b;
+        --secondary-color: #3a5a7a;
+        --accent-color: #4fc3f7;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --text-color: #495057;
+
+        --radius: 12px;
+        --shadow: 0 8px 24px rgba(19, 31, 53, 0.08);
+        --p-size: clamp(1.02rem, 0.35vw + 1rem, 1.14rem);
+        --p-line: 1.75;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html:focus-within {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto,
+          Arial, sans-serif;
+        margin: 0;
+        background-color: var(--light-color);
+        color: var(--text-color);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      p {
+        font-size: var(--p-size);
+        line-height: var(--p-line);
+      }
+      /* Skip link for a11y */
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      .skip-link:focus {
+        position: fixed;
+        left: 1rem;
+        top: 1rem;
+        z-index: 1000;
+        width: auto;
+        height: auto;
+        padding: 0.6rem 0.9rem;
+        background: var(--accent-color);
+        color: #062033;
+        border-radius: 8px;
+        outline: none;
+        box-shadow: var(--shadow);
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: clamp(2rem, 2.6vw + 1rem, 2.6rem);
+        font-weight: 600;
+        letter-spacing: 0.2px;
+      }
+
+      header p {
+        font-size: clamp(1rem, 0.5vw + 0.9rem, 1.15rem);
+        opacity: 0.95;
+        max-width: 760px;
+        margin: 0.5rem auto 0;
+      }
+
+      main {
+        display: block;
+      }
+
+      section {
+        padding: 3rem 2rem;
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      h2 {
+        color: var(--primary-color);
+        font-size: clamp(1.5rem, 1.2vw + 1rem, 2rem);
+        margin: 0 0 1.5rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: var(--accent-color);
+        border-radius: 2px;
+      }
+
+      .project {
+        background-color: white;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(58, 90, 122, 0.08);
+        border-left: 4px solid var(--accent-color);
+      }
+
+      .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .demo-link,
+      .code-link {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: transform 0.12s ease, box-shadow 0.12s ease,
+          background-color 0.2s ease, color 0.2s ease;
+        text-decoration: none;
+        line-height: 1;
+      }
+
+      .demo-link {
+        background-color: var(--accent-color);
+        color: #072233;
+      }
+
+      .demo-link:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(79, 195, 247, 0.25);
+      }
+
+      .code-link {
+        background-color: #fff;
+        color: var(--accent-color);
+        border: 1px solid var(--accent-color);
+      }
+
+      .code-link:hover {
+        background-color: #f0f9ff;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(79, 195, 247, 0.18);
+      }
+
+      .project-content {
+        margin-top: 1rem;
+      }
+
+      .project-content h4 {
+        margin: 0.25rem 0 0.75rem;
+        color: var(--primary-color);
+      }
+
+      .features-list {
+        padding-left: 1.2rem;
+      }
+
+      .features-list li {
+        margin-bottom: 0.5rem;
+        position: relative;
+      }
+
+      .features-list li::before {
+        content: "▹";
+        position: absolute;
+        left: -1rem;
+        color: var(--accent-color);
+      }
+
+      .tech-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        list-style: none;
+        padding: 0;
+      }
+
+      .tech-tags li {
+        background-color: #e3f2fd;
+        color: var(--secondary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        border: 1px solid rgba(79, 195, 247, 0.25);
+        transition: transform 0.12s ease;
+      }
+
+      .tech-tags li:hover {
+        transform: translateY(-1px);
+      }
+
+      /* ========== Carousel (uses img/ path) ========== */
+      .carousel-container {
+        width: 100%;
+        max-width: 880px;
+        margin: 2rem auto;
+        position: relative;
+      }
+
+      .carousel {
+        width: 100%;
+        overflow: hidden;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        background: #fff;
+        transition: height 0.3s ease;
+      }
+
+      .slides {
+        display: flex;
+        will-change: transform;
+        transition: transform 0.5s ease-in-out;
+        touch-action: pan-y;
+      }
+
+      .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        background: #fff;
+      }
+
+      /* Centre images, no cropping, handle tall images gracefully */
+      .slide .media {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--light-color);
+        overflow: hidden;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .slide img {
+        max-width: 100%;
+        height: auto;
+        width: auto;
+        max-height: 90vh;
+        object-fit: contain;
+        display: block;
+        border-radius: 6px;
+      }
+
+      .dots {
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin: 0 5px;
+        background-color: #cfd8e3;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.12s ease;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+      }
+
+      .dot:hover {
+        transform: translateY(-1px);
+      }
+
+      .dot.active {
+        background-color: var(--accent-color);
+      }
+
+      .carousel-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      .carousel-nav button {
+        pointer-events: auto;
+        background-color: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        color: var(--primary-color);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+
+      .carousel-nav button:hover {
+        background-color: #fff;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background-color: var(--primary-color);
+        color: white;
+        margin-top: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .carousel-container {
+          max-width: 100%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .slides {
+          transition: none;
+        }
+        .demo-link,
+        .code-link {
+          transition: none;
+        }
+      }
+      /* Author section */
+      .author-section .project {
+        padding-top: 1rem;
+      }
+
+      .author-section .author-row {
+        display: grid;
+        grid-template-columns: 1fr auto; /* معلومات يسار – أيقونات يمين */
+        gap: 0.75rem 1rem;
+        align-items: center;
+        padding: 0.8rem 0.2rem;
+        border-bottom: 1px dashed rgba(58, 90, 122, 0.12);
+      }
+      .author-section .author-row:last-of-type {
+        border-bottom: 0;
+      }
+
+      .author-section .author-meta {
+        min-width: 0;
+      }
+
+      .author-section .author-name {
+        margin: 0;
+        font-size: clamp(1rem, 0.35vw + 1rem, 1.08rem);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .author-section .author-desc {
+        margin: 0.2rem 0 0;
+        font-size: 0.95rem;
+        color: var(--text-color);
+        opacity: 0.95;
+      }
+
+      .author-section .badge {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        color: #072233;
+        background: #e7f6ff;
+        border: 1px solid rgba(79, 195, 247, 0.35);
+      }
+      .author-section .badge.alt {
+        background: #f4f5ff;
+        color: var(--secondary-color);
+        border-color: rgba(58, 90, 122, 0.25);
+      }
+
+      /* Links (right side) */
+      .author-section .links {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .author-section .link {
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        display: inline-grid;
+        place-items: center;
+        background: #eef2f7;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        text-decoration: none;
+        transition: background-color 0.2s ease, transform 0.12s ease,
+          border-color 0.2s ease;
+      }
+      .author-section .link:hover {
+        background: #fff;
+        transform: translateY(-1px);
+        border-color: rgba(79, 195, 247, 0.45);
+      }
+      .author-section .link:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
+      }
+
+      /* SVG icon color: muted -> accent on hover */
+      .author-section .link svg {
+        width: 18px;
+        height: 18px;
+        color: #adb5bd; /* muted gray */
+        transition: color 0.25s ease;
+      }
+      .author-section .link:hover svg {
+        color: var(--accent-color);
+      }
+
+      .author-section .affiliation {
+        margin: 0.9rem 0 0;
+        padding: 0.6rem 1rem;
+        border-radius: calc(var(--radius) - 2px);
+        background: linear-gradient(180deg, #f7fbff, #f1f8ff);
+        border: 1px solid rgba(79, 195, 247, 0.25);
+        text-align: center;
+        font-weight: 500;
+        color: var(--primary-color);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem; /* مسافة بين الشعار والنص */
+        justify-content: center;
+      }
+
+      .author-section .affiliation .uni-logo {
+        width: 50px; /* حجم أصغر للشعار */
+        height: auto;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      /* Responsive */
+      @media (max-width: 640px) {
+        .author-section .author-row {
+          grid-template-columns: 1fr; /* الأيقونات تنزل تحت على الموبايل */
+        }
+        .author-section .links {
+          justify-content: flex-start;
+        }
+      }
+      .author-section .affiliation {
+        margin: 0.9rem 0 0;
+        padding: 0.9rem 1rem;
+        border-radius: calc(var(--radius) - 2px);
+        background: linear-gradient(180deg, #f7fbff, #f1f8ff);
+        border: 1px solid rgba(79, 195, 247, 0.25);
+        text-align: center;
+        font-weight: 500;
+        color: var(--primary-color);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem; /* مسافة بين الشعار والنص */
+        justify-content: center;
+        width: 100%;
+      }
+
+      .author-section .affiliation .uni-logo {
+        width: 30x; /* حجم الشعار */
+        height: auto;
+        display: inline-block;
+      }
+
+      /* --- Smart Lock page additions --- */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--secondary-color);
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: var(--accent-color);
+      }
+      .project-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem 1.5rem;
+        margin: -0.5rem 0 1.5rem;
+        color: var(--secondary-color);
+        font-size: 0.95rem;
+      }
+      .project-meta i {
+        color: var(--accent-color);
+        margin-right: 0.35rem;
+      }
+      .credits {
+        font-size: 0.95rem;
+        background: #f1f8ff;
+        border-left: 4px solid var(--accent-color);
+        border-radius: 6px;
+        padding: 0.9rem 1.1rem;
+        margin: 0 0 1.5rem;
+      }
+      .credits p {
+        margin: 0.2rem 0;
+        font-size: 0.95rem;
+      }
+      .figure {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 0.5rem 0 0.5rem;
+        display: block;
+      }
+      .caption {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin: 0.3rem 0 1.5rem;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        margin: 0 0 1.5rem;
+      }
+      .attack-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+        min-width: 560px;
+        background: #fff;
+      }
+      .attack-table th,
+      .attack-table td {
+        text-align: left;
+        vertical-align: top;
+        padding: 0.75rem 0.9rem;
+        border-bottom: 1px solid #e3e8ef;
+      }
+      .attack-table th {
+        background: var(--primary-color);
+        color: #fff;
+        font-weight: 500;
+      }
+      .attack-table td:first-child {
+        font-weight: 600;
+        color: var(--secondary-color);
+        white-space: nowrap;
+      }
+      .status-bad {
+        color: #b23b3b;
+        font-weight: 500;
+      }
+      .status-good {
+        color: #1f7a4d;
+        font-weight: 500;
+      }
+      .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.65rem 1.2rem;
+        border-radius: 6px;
+        background: var(--accent-color);
+        color: #fff;
+        font-weight: 500;
+        text-decoration: none;
+        margin: 0.5rem 0 1.5rem;
+      }
+      .download-btn:hover {
+        background: #3aa8d8;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header role="banner">
+      <h1>Rama Mhalla</h1>
+      <p>
+        MSc Student in Telecommunication Engineering | AI, IoT, 5G, Cloud & Edge
+        Computing
+      </p>
+    </header>
+
+    <main id="main" role="main">
+      <section aria-labelledby="proj-title">
+        <a class="back-link" href="../index.html#projects">
+          <i class="fas fa-arrow-left"></i> Back to projects
+        </a>
+
+        <h2 id="proj-title">
+          Integrated Smart Home Platform: AI Energy Prediction over
+          Heterogeneous IoT Networks
+        </h2>
+
+        <div class="project-meta">
+          <span><i class="fas fa-university"></i>IoT project, University of Calabria</span>
+          <span><i class="far fa-calendar-alt"></i>Oct 2025 – May 2026</span>
+          <span><i class="fas fa-check-circle"></i>Completed</span>
+        </div>
+
+        <article class="project" aria-label="Integrated Smart Home Platform">
+          <div class="project-content">
+            <div class="credits">
+              <p><strong>My contributions:</strong></p>
+              <ul class="features-list">
+                <li>
+                  Integrated the Flutter application, BLE communication and MQTT
+                  with the Raspberry Pi edge gateway
+                </li>
+                <li>
+                  Developed the Flutter mobile application for real-time
+                  monitoring and smart home control
+                </li>
+                <li>
+                  Collaborated on integrating the AI energy prediction module
+                  into the overall system
+                </li>
+                <li>
+                  Designed and implemented the secure BLE communication between
+                  the Flutter application and the smart lock
+                </li>
+              </ul>
+              <!-- Add your teammates here, then remove these comment markers:
+              <p><strong>Team:</strong> ...</p>
+              -->
+            </div>
+
+            <h4>Overview</h4>
+            <p>
+              A working smart home platform that brings together several IoT
+              communication technologies, AI-based energy prediction and secure
+              access control. Sensors and actuators in three rooms communicate
+              over Zigbee and LoRaWAN with a Raspberry Pi 5 edge gateway, the
+              smartphone talks to the smart lock over BLE, and a Bi-LSTM model
+              forecasts household energy use to support appliance scheduling and
+              heating control. A Flutter app provides real-time monitoring,
+              remote control and alerts.
+            </p>
+
+            <h4>Motivation</h4>
+            <p>
+              Existing smart-home energy studies tend to focus on one part of the
+              problem: a prediction model (Random Forest, LSTM, or comparisons of
+              forecasting methods) or a framework that is described but not
+              built. This project set out to integrate heterogeneous IoT
+              communication, AI prediction and security into one working
+              platform.
+            </p>
+
+            <h4>Design Decisions</h4>
+            <ul class="features-list">
+              <li><strong>Zigbee:</strong> low-power mesh network for reliable indoor sensor communication</li>
+              <li><strong>LoRaWAN:</strong> long-range link for distant nodes such as the garage</li>
+              <li><strong>BLE:</strong> short-range link between the smartphone and the smart lock</li>
+              <li><strong>Raspberry Pi 5:</strong> edge gateway for protocol integration and local processing</li>
+              <li><strong>MQTT:</strong> lightweight publish/subscribe messaging for real-time communication</li>
+              <li><strong>Bi-LSTM:</strong> time-series forecasting of energy use to drive optimisation</li>
+            </ul>
+
+            <section aria-labelledby="arch-title">
+              <h2 id="arch-title">System Architecture</h2>
+              <article class="project" aria-label="Architecture">
+                <img
+                  class="figure"
+                  src="../images/projects/smart_home/slides/slide-04.jpg"
+                  alt="Physical and network architecture: Raspberry Pi 5 gateway, Zigbee rooms, LoRaWAN and BLE garage, Bi-LSTM prediction and Flutter app"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <p class="caption">
+                  Rooms 1 and 2 connect over Zigbee; the garage (room 3) uses
+                  LoRaWAN and BLE. The gateway publishes data over MQTT to the
+                  Flutter app and feeds the Bi-LSTM energy prediction.
+                </p>
+                <img
+                  class="figure"
+                  src="../images/projects/smart_home/slides/slide-05.jpg"
+                  alt="Physical testbed with Raspberry Pi gateway, three room nodes, LoRaWAN and Zigbee modules, ESP32 and motors used as heaters"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <p class="caption">
+                  The physical testbed: Raspberry Pi gateway, three room nodes
+                  with LoRaWAN and Zigbee modules, the ESP32 smart lock module,
+                  and motors standing in for heaters.
+                </p>
+              </article>
+            </section>
+
+            <section aria-labelledby="challenges-title">
+              <h2 id="challenges-title">Engineering Challenges</h2>
+              <div class="table-wrap">
+                <table class="attack-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Challenge</th>
+                      <th scope="col">Solution</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Heterogeneous protocols</td>
+                      <td>Unified Zigbee, LoRa, BLE and MQTT through the Raspberry Pi gateway</td>
+                    </tr>
+                    <tr>
+                      <td>Real-time communication</td>
+                      <td>MQTT publish/subscribe messaging between gateway and app</td>
+                    </tr>
+                    <tr>
+                      <td>Smart lock security</td>
+                      <td>Secure BLE authentication between the app and the lock</td>
+                    </tr>
+                    <tr>
+                      <td>LoRa frequency mismatch</td>
+                      <td>Validated the hardware configuration and communication experimentally</td>
+                    </tr>
+                    <tr>
+                      <td>AI integration</td>
+                      <td>Connected the prediction module to the edge gateway for real-time inference</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <h4>Results</h4>
+            <ul class="features-list">
+              <li>Real-time sensor data synchronised to the app over MQTT</li>
+              <li>Remote control of lights and heaters in each room</li>
+              <li>
+                BLE smart lock: a matching PIN triggers the garage unlock, and a
+                confirmation is sent to the gateway over LoRa
+              </li>
+              <li>AI-based alerts and notifications in the app</li>
+            </ul>
+
+            <h4>From Smart Home to Secure Smart Lock</h4>
+            <p>
+              The IoT Security course made it clear that the smart lock was the
+              most safety-critical device in the platform. It was then redesigned
+              with authentication and end-to-end encryption and tested against
+              real attacks:
+              <a href="smart_lock.html">see the Secure Smart Lock project</a>.
+            </p>
+
+            <h4>Presentation Slides</h4>
+            <div
+              class="carousel-container"
+              aria-roledescription="carousel"
+              aria-label="Presentation slides carousel"
+            >
+              <div class="carousel">
+                <div class="slides" aria-live="polite">
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-02.jpg"
+                        alt="Literature review: from existing research to the project idea"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-03.jpg"
+                        alt="Design decisions: Zigbee, LoRa, BLE, Raspberry Pi, MQTT and Bi-LSTM"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-04.jpg"
+                        alt="Physical and network architecture"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-05.jpg"
+                        alt="Physical testbed: gateway, three rooms, LoRaWAN, Zigbee and ESP32 modules"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-06.jpg"
+                        alt="My technical contributions"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-07.jpg"
+                        alt="Project evolution: from the smart home platform to the secure smart lock"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-08.jpg"
+                        alt="Engineering challenges and solutions"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-09.jpg"
+                        alt="Real-time data synchronisation via MQTT"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-10.jpg"
+                        alt="Remote device control from the Flutter app"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-11.jpg"
+                        alt="BLE smart lock interface"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_home/slides/slide-12.jpg"
+                        alt="AI-based alerts and notifications"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-nav" aria-hidden="false">
+                <button
+                  type="button"
+                  aria-label="Previous slide"
+                  class="prevBtn"
+                >
+                  ❮
+                </button>
+                <button type="button" aria-label="Next slide" class="nextBtn">
+                  ❯
+                </button>
+              </div>
+
+              <div class="dots" aria-hidden="false"></div>
+            </div>
+
+            <a
+              class="download-btn"
+              href="../docs/smart-home-platform-slides.pdf"
+              target="_blank"
+              rel="noopener"
+            >
+              <i class="fas fa-file-pdf"></i> Download slides (PDF)
+            </a>
+
+            <h4>Technologies Used</h4>
+            <ul class="tech-tags" aria-label="Technologies">
+              <li>Raspberry Pi 5</li>
+              <li>Zigbee (XBee)</li>
+              <li>LoRaWAN</li>
+              <li>Bluetooth LE</li>
+              <li>ESP32</li>
+              <li>Arduino</li>
+              <li>MQTT</li>
+              <li>Bi-LSTM</li>
+              <li>Flutter</li>
+              <li>Edge Computing</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer role="contentinfo">
+      <p>&copy; 2026 Rama Mhalla | All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Initialize all carousels on the page independently.
+      (function () {
+        const containers = Array.from(
+          document.querySelectorAll(".carousel-container")
+        );
+        if (containers.length === 0) return;
+
+        containers.forEach((container) => {
+          const carousel = container.querySelector(".carousel");
+          const track = carousel.querySelector(".slides");
+          const slides = Array.from(track.children);
+          const prevBtn = container.querySelector(".prevBtn");
+          const nextBtn = container.querySelector(".nextBtn");
+          const dotsWrap = container.querySelector(".dots");
+
+          let current = 0;
+          let timer = null;
+          let paused = false;
+
+          // build dots
+          const dots = slides.map((_, i) => {
+            const dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "dot" + (i === 0 ? " active" : "");
+            dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+            dot.addEventListener("click", () => moveTo(i));
+            dotsWrap.appendChild(dot);
+            return dot;
+          });
+
+          function setActiveDot(index) {
+            dots.forEach((d, i) => d.classList.toggle("active", i === index));
+          }
+
+          function moveTo(index) {
+            current = (index + slides.length) % slides.length;
+            const img = slides[current]?.querySelector("img");
+            if (img) img.loading = "eager";
+            track.style.transform = `translateX(-${current * 100}%)`;
+            setActiveDot(current);
+            setHeight();
+            restart();
+          }
+
+          function next() {
+            moveTo(current + 1);
+          }
+          function prev() {
+            moveTo(current - 1);
+          }
+
+          // Adaptive height per carousel
+          function setHeight() {
+            const media = slides[current]?.querySelector(".media");
+            if (!media) return;
+            requestAnimationFrame(() => {
+              const h = media.scrollHeight;
+              carousel.style.height = h + "px";
+            });
+          }
+
+          // Attach button listeners (defensive)
+          if (nextBtn)
+            nextBtn.addEventListener("click", next, { passive: true });
+          if (prevBtn)
+            prevBtn.addEventListener("click", prev, { passive: true });
+
+          // keyboard support scoped to the document but only when focus inside container
+          container.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowRight") next();
+            if (e.key === "ArrowLeft") prev();
+          });
+
+          // pointer swipe (scoped to this track)
+          let startX = 0,
+            nowX = 0,
+            dragging = false;
+
+          track.addEventListener("pointerdown", (e) => {
+            dragging = true;
+            startX = nowX = e.clientX;
+            track.style.transition = "none";
+            // capture pointer to ensure pointerup fires even outside element
+            track.setPointerCapture && track.setPointerCapture(e.pointerId);
+          });
+
+          track.addEventListener("pointermove", (e) => {
+            if (!dragging) return;
+            nowX = e.clientX;
+            const dx = nowX - startX;
+            track.style.transform = `translateX(calc(-${
+              current * 100
+            }% + ${dx}px))`;
+          });
+
+          function endDrag(e) {
+            if (!dragging) return;
+            track.style.transition = "";
+            const dx = nowX - startX;
+            if (Math.abs(dx) > 60) {
+              dx < 0 ? next() : prev();
+            } else {
+              moveTo(current);
+            }
+            dragging = false;
+            if (e && e.pointerId) {
+              try {
+                track.releasePointerCapture &&
+                  track.releasePointerCapture(e.pointerId);
+              } catch (err) {}
+            }
+          }
+
+          track.addEventListener("pointerup", endDrag);
+          track.addEventListener("pointercancel", endDrag);
+          track.addEventListener("pointerleave", endDrag);
+
+          // Pause/play on hover & focus within this container
+          const pause = () => {
+            paused = true;
+            clearInterval(timer);
+          };
+          const play = () => {
+            paused = false;
+            restart();
+          };
+
+          container.addEventListener("mouseenter", pause);
+          container.addEventListener("mouseleave", play);
+          container.addEventListener("focusin", pause);
+          container.addEventListener("focusout", play);
+
+          function restart() {
+            clearInterval(timer);
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+              return;
+            if (!paused) timer = setInterval(next, 5000);
+          }
+
+          // update height whenever any slide image finishes loading
+          const imgs = track.querySelectorAll("img");
+          imgs.forEach((img, i) => {
+            if (i === 0) img.loading = "eager";
+            if (img.complete) setHeight();
+            else img.addEventListener("load", setHeight, { once: true });
+          });
+          // load the next slide's image ahead of time
+          track.addEventListener("transitionend", () => {
+            const nextImg = slides[(current + 1) % slides.length]?.querySelector("img");
+            if (nextImg) nextImg.loading = "eager";
+          });
+          window.addEventListener("resize", setHeight);
+
+          // make slides focusable for keyboard users
+          slides.forEach((s) => s.setAttribute("tabindex", "-1"));
+
+          // Initial render
+          moveTo(0);
+        });
+      })();
+    </script>
+  </body>
+</html>
+

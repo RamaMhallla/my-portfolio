@@ -17,6 +17,47 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="./css/style.css" />
+    <style>
+      /* Icon panel used for projects that do not have a screenshot yet */
+      .project-image.project-visual {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        min-height: 220px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: #fff;
+        text-align: center;
+        padding: 1.5rem;
+      }
+      .project-visual i {
+        font-size: 3.5rem;
+        color: var(--accent-color);
+      }
+      .project-visual span {
+        font-size: 0.95rem;
+        letter-spacing: 0.04em;
+        opacity: 0.9;
+      }
+      .project-links .demo-link,
+      .project-links .code-link {
+        white-space: nowrap;
+      }
+      /* Publication details */
+      .publication-authors {
+        margin: 0 0 0.4rem;
+      }
+      .publication-venue {
+        margin: 0;
+        color: var(--secondary-color);
+        font-style: italic;
+      }
+      .publication-venue i {
+        color: var(--accent-color);
+        margin-right: 0.4rem;
+      }
+    </style>
   </head>
   <body>
     <!-- Navigation Bar -->
@@ -32,6 +73,7 @@
         <li><a href="#education">Education</a></li>
         <li><a href="#honours">Honours & Awards</a></li>
         <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#research">Research</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -74,6 +116,8 @@
           I am particularly interested in learning-based decision mechanisms,
           scalable system modeling, and the practical integration of edge and cloud
           intelligence through research-oriented and collaborative projects.
+          Most recently, I co-authored a short paper on Transformer-based molecular
+          dynamics prediction, presented at HC@AIxIA 2026.
         </p>
       </div>
       <div class="about-image">
@@ -96,7 +140,7 @@
               ><i class="fas fa-university"></i> University of Calabria</span
             >
             <span class="education-date"
-              ><i class="far fa-calendar-alt"></i> 2024 - Present</span
+              ><i class="far fa-calendar-alt"></i> Oct 2024 - Jun 2027 (expected)</span
             >
             <span class="education-location"
               ><i class="fas fa-map-marker-alt"></i> Rende, Italy</span
@@ -104,21 +148,30 @@
           </div>
           <div class="education-description">
             <p>
-              Specializing in Intelligent Sensing, Computing, and Networks with
-              focus areas:
+              Curriculum: Smart Sensing, Computing and Networking. Weighted
+              average: <strong>29.6/30</strong>, with five exams passed with
+              honours (30 cum laude).
             </p>
+            <p>Selected coursework:</p>
             <ul class="education-specializations">
               <li>
-                <i class="fas fa-microchip"></i> Artificial Intelligence
-                Applications
+                <i class="fas fa-cloud"></i> Distributed Systems and Cloud/Edge
+                Computing (30/30)
+              </li>
+              <li><i class="fas fa-shield-halved"></i> IoT Security (30/30)</li>
+              <li><i class="fas fa-brain"></i> Deep Learning (30 cum laude)</li>
+              <li>
+                <i class="fas fa-network-wired"></i> Networking Aspects of IoT
+                (30/30)
               </li>
               <li>
-                <i class="fas fa-network-wired"></i> IoT Systems Architecture
+                <i class="fas fa-chart-line"></i> Simulation and Performance
+                Optimization (30 cum laude)
               </li>
               <li>
-                <i class="fas fa-tachometer-alt"></i> 5G Network Technologies
+                <i class="fas fa-tower-broadcast"></i> Mobile Radio Networks
+                (30/30)
               </li>
-              <li><i class="fas fa-cloud"></i> Cloud/Edge Computing</li>
             </ul>
           </div>
         </div>
@@ -129,13 +182,13 @@
           <i class="fas fa-university"></i>
         </div>
         <div class="education-details">
-          <h3>BSc in Information and Communication Technology</h3>
+          <h3>BSc in Information and Communication Technology Engineering</h3>
           <div class="education-meta">
             <span class="education-institution"
               ><i class="fas fa-university"></i> University of Tartous</span
             >
             <span class="education-date"
-              ><i class="far fa-calendar-alt"></i> 2017 - 2021</span
+              ><i class="far fa-calendar-alt"></i> 2016 - 2021</span
             >
             <span class="education-location"
               ><i class="fas fa-map-marker-alt"></i> Tartous, Syria</span
@@ -143,8 +196,8 @@
           </div>
           <div class="education-description">
             <p>
-              Graduated with honors (90.14%) in Computer and Electronic Systems
-              specialization.
+              Graduated with honours (90.14/100) in the Computer and Electronic
+              Systems specialisation.
             </p>
             <p>Key focus areas:</p>
             <ul class="education-specializations">
@@ -161,8 +214,8 @@
     <section id="honours" class="honours-awards">
       <h2>Honours and Awards</h2>
 
-      <!-- <div class="awards-container">
-        Award: University of Calabria Scholarship
+      <div class="awards-container">
+        <!-- Award: University of Calabria Scholarship
         <div class="award-card highlight">
           <div class="award-year">2024</div>
           <div class="award-content">
@@ -351,7 +404,7 @@
             <span class="date">Completed 2023</span>
           </div>
           <a
-            href=" https://www.udemy.com/certificate/UC-ae5a854a-0ece-4f9d-8abb-60093dc3bd8b/"
+            href="https://www.udemy.com/certificate/UC-ae5a854a-0ece-4f9d-8abb-60093dc3bd8b/"
             class="view-cert"
             target="_blank"
           >
@@ -376,109 +429,158 @@
       </div>
     </section>
 
-    <section id="projects" class="projects">
-      <h2>Featured Projects</h2>
-      <!--Protein Dynamics Prediction using Machine Learning-->
+    <section id="research" class="projects">
+      <h2>Research &amp; Publications</h2>
       <div class="project">
         <div class="project-header">
-          <h3>Protein Dynamics Prediction using Machine Learning</h3>
+          <h3>
+            Comparing Recurrent Neural Networks against Transformers for
+            One-Step Molecular Dynamics Prediction
+          </h3>
           <div class="project-links">
-            <!-- Ongoing research: no public demo/code yet -->
-            <span class="demo-link">
-              <i class="fas fa-flask"></i> Ongoing Research
-            </span>
+            <a
+              href="https://hcaixia2026.unical.it/presentations"
+              class="demo-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fas fa-file-alt"></i> Workshop Listing
+            </a>
           </div>
         </div>
 
-        <p>
-          Research project focused on time-dependent prediction of protein molecular
-          dynamics using deep learning models. The goal is to learn the temporal
-          evolution of atomic coordinates, velocities, and forces in order to accelerate
-          molecular dynamics simulations and support data-driven decision-making in
-          complex physical systems.
+        <p class="publication-authors">
+          A. Dodaro, <strong>R. Mhalla</strong>, I. Shkhis, C. Adornetto,
+          V. Damico, F. Filice, G. Greco, T. Marino, M. Prejanò, S. Ventrici
+        </p>
+        <p class="publication-venue">
+          <i class="fas fa-award"></i>Accepted short paper, presented at the 5th
+          International AIxIA Workshop on Artificial Intelligence for Healthcare
+          (HC@AIxIA 2026), Perugia, Italy, 6–8 October 2026
         </p>
 
         <div class="project-content">
           <div class="project-image">
             <img
               src="images/profile/protein_project.jpeg"
-              alt="Protein Dynamics Prediction using Machine Learning"
+              alt="Molecular dynamics trajectory prediction with Transformers and BiLSTMs"
             />
           </div>
           <div class="project-details">
             <ul class="features-list">
-              <li>Time-series prediction of molecular dynamics trajectories using deep neural networks</li>
-              <li>Modeling high-dimensional sequential data (coordinates, velocities, forces)</li>
-              <li>Dimensionality reduction for long-term temporal prediction</li>
-              <li>Learning-based acceleration of molecular simulations</li>
-              <li>Exploration of uncertainty, stability, and generalization in dynamical systems</li>
+              <li>
+                Developed Transformer models for one-step prediction of molecular
+                dynamics trajectories
+              </li>
+              <li>Contributed to the evaluation against BiLSTM models</li>
+              <li>
+                Analysed the role of local and global atomic context in
+                prediction quality
+              </li>
+              <li>
+                Contributed to the scientific writing in an interdisciplinary
+                team of computer scientists and chemists
+              </li>
             </ul>
-          <ul class="tech-tags">
-            <li>Python</li>
-            <li>Deep Learning</li>
-            <li>Time-Series Prediction</li>
-            <li>Molecular Dynamics</li>
-            <li>Scientific Machine Learning</li>
-            <li>Research</li>
-          </ul>
-
+            <ul class="tech-tags">
+              <li>Python</li>
+              <li>Deep Learning</li>
+              <li>Transformers</li>
+              <li>BiLSTM</li>
+              <li>Molecular Dynamics</li>
+              <li>Scientific Machine Learning</li>
+            </ul>
           </div>
         </div>
       </div>
-      <!--Predictive Home Energy & Appliance Optimization System-->
+    </section>
+
+    <section id="projects" class="projects">
+      <h2>Featured Projects</h2>
+      <!--Green-Aware 5G-SDN Control for FANETs-->
       <div class="project">
         <div class="project-header">
-          <h3>Predictive Home Energy & Appliance Optimization System</h3>
+          <h3>Green-Aware 5G-SDN Control for Flying Ad-Hoc Networks</h3>
           <div class="project-links">
             <span class="demo-link">
-              <i class="fas fa-bolt"></i> Ongoing Project
+              <i class="fas fa-flask"></i> Ongoing · 2026
             </span>
           </div>
         </div>
 
         <p>
-          A smart home energy management system that integrates heterogeneous
-          networking technologies with a deep learning–based prediction model to
-          optimize household energy consumption. The system learns user routines
-          using an LSTM model to enable predictive appliance scheduling, adaptive
-          HVAC control, and energy-efficient decision-making.
+          An SDN control approach for flying ad-hoc networks (drone networks) in
+          which forwarding decisions take into account each drone's energy
+          budget and the QoS needs of the traffic, under a changing network
+          topology. Developed in the Smart and Programmable Networks course at
+          the University of Calabria.
         </p>
 
         <div class="project-content">
-          <div class="project-image">
-            <img
-              src="images/profile/networking_project.jpeg"
-              alt="Predictive Home Energy & Appliance Optimization System"
-            />
+          <!-- To use a screenshot instead, replace this div with:
+               <div class="project-image"><img src="images/profile/fanet_sdn.png" alt="..." /></div> -->
+          <div class="project-image project-visual">
+            <i class="fas fa-plane"></i>
+            <span>SDN control for drone networks</span>
           </div>
-
           <div class="project-details">
             <ul class="features-list">
+              <li>Energy-aware forwarding that accounts for drone energy budgets</li>
+              <li>QoS-aware traffic handling based on models of 5G QoS classes</li>
+              <li>NWDAF-inspired telemetry to drive adaptive control decisions</li>
               <li>
-                Distributed sensing via Wi-Fi, Bluetooth, Zigbee (rooms), and LoRa
-                (garage)
-              </li>
-              <li>
-                MQTT-based communication for real-time data exchange and control
-              </li>
-              <li>
-                LSTM-based energy prediction learned from user routines
-              </li>
-              <li>
-                Predictive appliance scheduling and adaptive HVAC control
-              </li>
-              <li>
-                Secure garage access using Bluetooth-based password authentication
+                Emulated drone network with Containernet and a Ryu controller
+                (OpenFlow 1.3)
               </li>
             </ul>
-
             <ul class="tech-tags">
-              <li>IoT Networking</li>
-              <li>Wi-Fi / Bluetooth / Zigbee / LoRa</li>
-              <li>MQTT</li>
-              <li>Edge Computing</li>
-              <li>LSTM (Deep Learning)</li>
-              <li>Smart Energy</li>
+              <li>SDN</li>
+              <li>Ryu</li>
+              <li>OpenFlow 1.3</li>
+              <li>Containernet</li>
+              <li>5G QoS</li>
+              <li>FANET</li>
+              <li>Python</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--Adaptive RLNC for Vehicular Networks-->
+      <div class="project">
+        <div class="project-header">
+          <h3>Adaptive Random Linear Network Coding for Vehicular Networks</h3>
+          <div class="project-links">
+            <span class="demo-link">
+              <i class="fas fa-flask"></i> Ongoing · 2026
+            </span>
+          </div>
+        </div>
+
+        <p>
+          A network-emulation study of Random Linear Network Coding (RLNC) in
+          vehicular networks, investigating how coding redundancy can adapt to
+          link-quality feedback as vehicles move and wireless conditions change.
+        </p>
+
+        <div class="project-content">
+          <!-- To use a screenshot instead, replace this div with:
+               <div class="project-image"><img src="images/profile/rlnc_vehicular.png" alt="..." /></div> -->
+          <div class="project-image project-visual">
+            <i class="fas fa-car"></i>
+            <span>Network coding for vehicles</span>
+          </div>
+          <div class="project-details">
+            <ul class="features-list">
+              <li>Adaptation of RLNC redundancy based on link-quality feedback</li>
+              <li>Vehicular network emulated in Mininet-WiFi</li>
+              <li>Realistic vehicle mobility driven by SUMO traces</li>
+            </ul>
+            <ul class="tech-tags">
+              <li>Network Coding (RLNC)</li>
+              <li>Mininet-WiFi</li>
+              <li>SUMO</li>
+              <li>Vehicular Networks</li>
+              <li>Python</li>
             </ul>
           </div>
         </div>
@@ -506,7 +608,8 @@
             tracking using wearable sensors. The system integrates edge and cloud
             computing, a Flutter-based mobile application, MQTT-based IoT data
             acquisition, and AI models for heart disease prediction and X-ray–based
-            pneumonia detection.
+            pneumonia detection. Developed in the Distributed Systems and
+            Cloud/Edge Computing course at the University of Calabria.
           </p>
 
           <div class="project-content">
@@ -542,6 +645,11 @@
                   MQTT-based communication for reliable and lightweight IoT data
                   exchange
                 </li>
+                <li>
+                  Edge and cloud processing evaluated in EdgeCloudSim for 100–500
+                  devices: service time, task failures, processing and network
+                  delay, and energy consumption
+                </li>
               </ul>
 
               <ul class="tech-tags">
@@ -551,10 +659,122 @@
                 <li>TensorFlow / TFLite</li>
                 <li>MQTT</li>
                 <li>Edge–Cloud Computing</li>
+                <li>EdgeCloudSim</li>
               </ul>
             </div>
           </div>
         </div>
+      <!--Predictive Home Energy & Appliance Optimization System-->
+      <div class="project">
+        <div class="project-header">
+          <h3>Predictive Home Energy & Appliance Optimization System</h3>
+          <div class="project-links">
+            <a href="projects/smart_home.html" class="demo-link">
+              <i class="fas fa-external-link-alt"></i> Details &amp; Slides
+            </a>
+          </div>
+        </div>
+
+        <p>
+          A working smart home platform that integrates heterogeneous IoT
+          networks through a Raspberry Pi 5 edge gateway with a Bi-LSTM energy
+          prediction model. It learns household routines to support predictive
+          appliance scheduling, adaptive heating control and energy-efficient
+          decisions, with a Flutter app for monitoring and control.
+        </p>
+
+        <div class="project-content">
+          <div class="project-image">
+            <img
+              src="images/profile/networking_project.jpeg"
+              alt="Predictive Home Energy & Appliance Optimization System"
+            />
+          </div>
+
+          <div class="project-details">
+            <ul class="features-list">
+              <li>
+                Zigbee (rooms), LoRaWAN and BLE (garage), unified by a Raspberry
+                Pi 5 edge gateway
+              </li>
+              <li>
+                MQTT-based communication for real-time data exchange and control
+              </li>
+              <li>
+                Bi-LSTM energy prediction learned from user routines
+              </li>
+              <li>
+                Predictive appliance scheduling and adaptive HVAC control
+              </li>
+              <li>
+                Flutter app for real-time monitoring, remote control and alerts
+              </li>
+              <li>
+                Secure garage access via a BLE smart lock, later extended into
+                the Secure Smart Lock project
+              </li>
+            </ul>
+
+            <ul class="tech-tags">
+              <li>IoT Networking</li>
+              <li>Zigbee / LoRaWAN / BLE</li>
+              <li>Raspberry Pi 5</li>
+              <li>MQTT</li>
+              <li>Edge Computing</li>
+              <li>Bi-LSTM (Deep Learning)</li>
+              <li>Flutter</li>
+              <li>Smart Energy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--Secure Smart Lock-->
+      <div class="project">
+        <div class="project-header">
+          <h3>Secure Smart Lock: Authenticated IoT Communication</h3>
+          <div class="project-links">
+            <a href="projects/smart_lock.html" class="demo-link">
+              <i class="fas fa-external-link-alt"></i> Details &amp; Slides
+            </a>
+          </div>
+        </div>
+
+        <p>
+          A Bluetooth smart lock with authenticated, integrity-protected
+          communication between a Flutter app and an ESP32, developed as a team
+          project in the IoT Security course at the University of Calabria and
+          tested against common network attacks.
+        </p>
+
+        <div class="project-content">
+          <!-- To use a screenshot instead, replace this div with:
+               <div class="project-image"><img src="images/profile/smart_lock.png" alt="..." /></div> -->
+          <div class="project-image project-visual">
+            <i class="fas fa-lock"></i>
+            <span>Authenticated BLE communication</span>
+          </div>
+          <div class="project-details">
+            <ul class="features-list">
+              <li>
+                Encrypted and authenticated Bluetooth messages using AES-256 and
+                HMAC
+              </li>
+              <li>Cloud connectivity over MQTTS with a Flask credential server</li>
+              <li>Replay protection with server-side OTP and nonce validation</li>
+              <li>Tested against man-in-the-middle and replay attacks</li>
+              <li>Security analysis with Wireshark, Bettercap and Nmap</li>
+            </ul>
+            <ul class="tech-tags">
+              <li>ESP32</li>
+              <li>Flutter</li>
+              <li>Bluetooth LE</li>
+              <li>AES-256 / HMAC</li>
+              <li>MQTTS</li>
+              <li>Wireshark</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <!--Gesture_Voice_Controlled_Presentation_System-->
       <!-- <div class="project">
         <div class="project-header">
@@ -939,6 +1159,11 @@
         <li><i class="fab fa-html5"></i> HTML5 & CSS3</li>
         <li><i class="fab fa-git-alt"></i> Git & GitHub</li>
         <li><i class="fas fa-project-diagram"></i> MQTT Protocol</li>
+        <li><i class="fas fa-sitemap"></i> SDN (Ryu / OpenFlow)</li>
+        <li><i class="fas fa-diagram-project"></i> Network Emulation</li>
+        <li><i class="fas fa-shield-halved"></i> IoT Security</li>
+        <li><i class="fas fa-code"></i> C++</li>
+        <li><i class="fab fa-docker"></i> Docker</li>
       </ul>
     </section>
 
@@ -978,7 +1203,7 @@
     </section>
 
     <footer>
-      <p>&copy; 2025 Rama Mhalla | Telecom Engineer & AI Enthusiast</p>
+      <p>&copy; 2026 Rama Mhalla | Telecom Engineer & AI Enthusiast</p>
     </footer>
 
     <script src="./js/script.js" defer></script>

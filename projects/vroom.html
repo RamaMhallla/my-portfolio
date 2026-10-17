@@ -20,6 +20,28 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link rel="stylesheet" href="../css/pages.css" />
+    <style>
+      /* Slider fixes: each slide takes the height of its own screenshot,
+         and screenshots are never cropped */
+      .slides {
+        align-items: flex-start;
+      }
+      .media.is-landscape {
+        aspect-ratio: auto;
+      }
+      .carousel {
+        transition: height 0.3s ease;
+      }
+      @media (max-width: 600px) {
+        .status {
+          top: 0.5rem;
+          bottom: auto;
+          right: 0.5rem;
+          font-size: 0.7rem;
+          padding: 0.2rem 0.55rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <header role="banner">
@@ -394,7 +416,7 @@
                   aria-live="polite"
                   aria-atomic="true"
                 >
-                  Slide 1 of 19
+                  Slide 1 of 21
                 </div>
               </div>
 
@@ -417,7 +439,7 @@
     </main>
 
     <footer>
-      <p>&copy; 2025 Rama Mhalla | Telecom Engineer & AI Enthusiast</p>
+      <p>&copy; 2026 Rama Mhalla | Telecom Engineer & AI Enthusiast</p>
     </footer>
 
     <script>
@@ -467,35 +489,47 @@
         const total = slides.length;
         let index = 0;
 
-        // Classify slides based on image natural aspect ratio
+        // Classify each slide by its image's aspect ratio as soon as that
+        // image loads, and refresh the height. (Previously the height was only
+        // set after ALL images had loaded, but lazy images in hidden slides
+        // never load, so the carousel stayed collapsed.)
         function classifySlides() {
           const images = track.querySelectorAll(".media img");
-          let pending = images.length;
-          images.forEach((img) => {
+          images.forEach((img, i) => {
+            if (i === 0) img.loading = "eager";
             const apply = () => {
               const ar = img.naturalWidth / img.naturalHeight;
               const media = img.closest(".media");
               if (!media) return;
               media.classList.add(ar >= 0.9 ? "is-landscape" : "is-portrait");
-              if (--pending === 0) {
-                setCarouselHeight();
-                updateStatus();
-              }
+              setCarouselHeight();
             };
-            if (img.complete) apply();
+            if (img.complete && img.naturalWidth) apply();
             else img.addEventListener("load", apply, { once: true });
           });
         }
 
+        // Make sure the current and next slide images are requested
+        function loadAround() {
+          [index, (index + 1) % total].forEach((i) => {
+            const img = slides[i]?.querySelector("img");
+            if (img) img.loading = "eager";
+          });
+        }
+
         function setCarouselHeight() {
-          const active = slides[index]?.querySelector(".media");
+          const active = slides[index];
           if (!active) return;
-          // use scrollHeight to account for portrait/tall images
-          const h = active.scrollHeight;
-          carousel.style.height = h + "px";
+          const img = active.querySelector("img");
+          if (img && !img.naturalWidth) return; // wait until it has loaded
+          // height of the whole slide (screenshot + caption); "important"
+          // is needed because pages.css fixes the height with !important
+          const h = active.offsetHeight;
+          if (h) carousel.style.setProperty("height", h + "px", "important");
         }
 
         function render() {
+          loadAround();
           track.style.transform = `translateX(-${index * 100}%)`;
           setCarouselHeight();
           updateStatus();

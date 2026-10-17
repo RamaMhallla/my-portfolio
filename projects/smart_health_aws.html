@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <title>Rama Mhalla | Portfolio</title>
+    <title>Smart Health Monitoring System | Rama Mhalla</title>
 
     <!-- Typography (same as theme) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -520,9 +520,88 @@
       }
 
       .author-section .affiliation .uni-logo {
-        width: 30x; /* حجم الشعار */
+        width: 30px; /* حجم الشعار */
         height: auto;
         display: inline-block;
+      }
+
+      /* --- Back link, project info, results and downloads --- */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--secondary-color);
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .back-link:hover {
+        color: var(--accent-color);
+      }
+      .project-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem 1.5rem;
+        margin: -0.5rem 0 1.5rem;
+        color: var(--secondary-color);
+        font-size: 0.95rem;
+      }
+      .project-meta i {
+        color: var(--accent-color);
+        margin-right: 0.35rem;
+      }
+      .credits {
+        background: #f1f8ff;
+        border-left: 4px solid var(--accent-color);
+        border-radius: 6px;
+        padding: 0.9rem 1.1rem;
+        margin: 0 0 1.5rem;
+      }
+      .credits p {
+        margin: 0.2rem 0;
+        font-size: 0.95rem;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        margin: 0 0 1.5rem;
+      }
+      .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+        min-width: 480px;
+        background: #fff;
+      }
+      .results-table th,
+      .results-table td {
+        text-align: left;
+        padding: 0.75rem 0.9rem;
+        border-bottom: 1px solid #e3e8ef;
+      }
+      .results-table th {
+        background: var(--primary-color);
+        color: #fff;
+        font-weight: 500;
+      }
+      .results-table td:first-child {
+        font-weight: 600;
+        color: var(--secondary-color);
+      }
+      .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.65rem 1.2rem;
+        border-radius: 6px;
+        background: var(--accent-color);
+        color: #072233;
+        font-weight: 500;
+        text-decoration: none;
+        margin: 0 0 1.5rem;
+      }
+      .download-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(79, 195, 247, 0.25);
       }
     </style>
   </head>
@@ -539,10 +618,28 @@
 
     <main id="main" role="main">
       <section aria-labelledby="proj-title">
+        <a class="back-link" href="../index.html#projects">
+          <i class="fas fa-arrow-left"></i> Back to projects
+        </a>
+
         <h2 id="proj-title">Smart Health Monitoring System</h2>
+
+        <div class="project-meta">
+          <span><i class="fas fa-university"></i>Distributed Systems and Cloud/Edge Computing, University of Calabria</span>
+          <span><i class="far fa-calendar-alt"></i>May – Jul 2025</span>
+          <span><i class="fas fa-check-circle"></i>Completed</span>
+        </div>
 
         <article class="project" aria-label="Smart Health Monitoring System">
           <div class="project-content">
+            <div class="credits">
+              <p><strong>Team:</strong> Rama Mhalla, Vincenzo Damico</p>
+              <p>
+                <strong>Course instructor:</strong> Prof. Claudio Savaglio
+                (A.Y. 2024–2025)
+              </p>
+            </div>
+
             <h4>Project Description</h4>
             <p>
               A hybrid health monitoring system designed to empower individuals
@@ -567,6 +664,51 @@
                 Cross-platform Flutter app with offline capability and local DB
               </li>
               <li>Full-stack AWS: Cognito, Lambda, DynamoDB, QuickSight</li>
+            </ul>
+
+            <h4>Results: Edge vs. Cloud Inference</h4>
+            <p>
+              The heart-disease model was deployed both in the cloud and on the
+              phone, so the app can trade accuracy for speed and keep working
+              offline.
+            </p>
+            <div class="table-wrap">
+              <table class="results-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Deployment</th>
+                    <th scope="col">Accuracy</th>
+                    <th scope="col">Average latency</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Cloud (AWS SageMaker)</td>
+                    <td>93.21%</td>
+                    <td>≈ 640 ms</td>
+                  </tr>
+                  <tr>
+                    <td>Edge (TensorFlow Lite on the phone)</td>
+                    <td>85.25%</td>
+                    <td>≈ 19 ms</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="features-list">
+              <li>
+                Edge and cloud processing evaluated in EdgeCloudSim for 100–500
+                devices: service time, task failures, processing and network
+                delay, and energy consumption
+              </li>
+              <li>
+                Four orchestration policies compared: AI-based, random,
+                predictive and game-theory
+              </li>
+              <li>
+                Prediction records analysed in an Amazon QuickSight dashboard
+                built on DynamoDB data
+              </li>
             </ul>
 
             <!-- Architecture (img/ folder) -->
@@ -826,6 +968,172 @@
               <div class="dots" aria-hidden="false"></div>
             </div>
 
+            <h4>Presentation Slides</h4>
+            <div
+              class="carousel-container"
+              aria-roledescription="carousel"
+              aria-label="Presentation slides carousel"
+            >
+              <div class="carousel">
+                <div class="slides" aria-live="polite">
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-02.jpg"
+                        alt="Goals: heart disease prediction, pneumonia detection from X-ray, health monitoring"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-03.jpg"
+                        alt="Functional requirements (part 1)"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-04.jpg"
+                        alt="Functional requirements (part 2)"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-05.jpg"
+                        alt="Non-functional requirements"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-06.jpg"
+                        alt="ACOSO-Meth analysis model"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-07.jpg"
+                        alt="ACOSO-Meth domain model"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-08.jpg"
+                        alt="System workflow: simulated sensors, mobile edge device, AWS and dashboards"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-09.jpg"
+                        alt="Amazon flow"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-10.jpg"
+                        alt="AWS Amplify configuration: DynamoDB, AppSync, Cognito, S3"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-11.jpg"
+                        alt="Amazon SageMaker model: 93.21% accuracy, about 640 ms average latency"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-12.jpg"
+                        alt="EdgeCloudSim policy comparison and QuickSight dashboard"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-13.jpg"
+                        alt="Flutter app flow"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <div class="slide">
+                    <div class="media">
+                      <img
+                        src="../images/projects/smart_health_aws/slides/slide-14.jpg"
+                        alt="Local AI models: 85.25% accuracy, about 19 ms average latency"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-nav" aria-hidden="false">
+                <button
+                  type="button"
+                  aria-label="Previous slide"
+                  class="prevBtn"
+                >
+                  ❮
+                </button>
+                <button type="button" aria-label="Next slide" class="nextBtn">
+                  ❯
+                </button>
+              </div>
+
+              <div class="dots" aria-hidden="false"></div>
+            </div>
+
+            <a
+              class="download-btn"
+              href="../docs/smart-health-monitoring-slides.pdf"
+              target="_blank"
+              rel="noopener"
+            >
+              <i class="fas fa-file-pdf"></i> Download slides (PDF)
+            </a>
+
             <h4>Technologies Used</h4>
             <ul class="tech-tags" aria-label="Technologies">
               <li>Flutter</li>
@@ -834,6 +1142,11 @@
               <li>Python</li>
               <li>TensorFlow Lite</li>
               <li>MQTT</li>
+              <li>AWS Lambda</li>
+              <li>DynamoDB</li>
+              <li>Cognito</li>
+              <li>QuickSight</li>
+              <li>EdgeCloudSim</li>
             </ul>
           </div>
         </article>
@@ -841,7 +1154,7 @@
     </main>
 
     <footer role="contentinfo">
-      <p>&copy; 2025 Rama Mhalla | All rights reserved.</p>
+      <p>&copy; 2026 Rama Mhalla | All rights reserved.</p>
     </footer>
 
     <script>
@@ -881,6 +1194,8 @@
 
           function moveTo(index) {
             current = (index + slides.length) % slides.length;
+            const img = slides[current]?.querySelector("img");
+            if (img) img.loading = "eager";
             track.style.transform = `translateX(-${current * 100}%)`;
             setActiveDot(current);
             setHeight();
@@ -982,23 +1297,16 @@
             if (!paused) timer = setInterval(next, 5000);
           }
 
-          // ensure height correct once images are loaded (per carousel)
+          // update height whenever any slide image finishes loading
+          // (lazy images in hidden slides only load when shown, so waiting
+          // for all of them left the carousel at zero height)
           const imgs = track.querySelectorAll("img");
-          let pending = imgs.length;
-          if (pending === 0) setHeight();
-          imgs.forEach((img) => {
-            if (img.complete) {
-              if (--pending === 0) setHeight();
-            } else {
-              img.addEventListener(
-                "load",
-                () => {
-                  if (--pending === 0) setHeight();
-                },
-                { once: true }
-              );
-            }
+          imgs.forEach((img, i) => {
+            if (i === 0) img.loading = "eager";
+            if (img.complete) setHeight();
+            else img.addEventListener("load", setHeight, { once: true });
           });
+          window.addEventListener("resize", setHeight);
 
           // make slides focusable for keyboard users
           slides.forEach((s) => s.setAttribute("tabindex", "-1"));
